@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Sylas">
 <meta property="og:description" content="一、MyBatis1、简介1.MyBatis最早源自Apache基金会的一个开源项目iBatis,2010年这个项目由Apache software foundation迁移到了google code,并且改名为MyBatis. 2.MyBatis是支持普通SQL查询,存储过程和高级映射的优秀持久层框架. 3.MyBatis封装了几乎所有的JDBC代码和参数的手工设置以及结果集的检索; 4.MyB">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-04T09:10:32.601Z">
+<meta property="og:updated_time" content="2019-06-05T07:01:36.507Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MyBatis">
 <meta name="twitter:description" content="一、MyBatis1、简介1.MyBatis最早源自Apache基金会的一个开源项目iBatis,2010年这个项目由Apache software foundation迁移到了google code,并且改名为MyBatis. 2.MyBatis是支持普通SQL查询,存储过程和高级映射的优秀持久层框架. 3.MyBatis封装了几乎所有的JDBC代码和参数的手工设置以及结果集的检索; 4.MyB">
@@ -94,9 +94,23 @@
         <h1 id="一、MyBatis"><a href="#一、MyBatis" class="headerlink" title="一、MyBatis"></a>一、MyBatis</h1><h2 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h2><pre><code>1.MyBatis最早源自Apache基金会的一个开源项目iBatis,2010年这个项目由Apache software foundation迁移到了google code,并且改名为MyBatis.
 2.MyBatis是支持普通SQL查询,存储过程和高级映射的优秀持久层框架.
 3.MyBatis封装了几乎所有的JDBC代码和参数的手工设置以及结果集的检索;
-4.MyBatis使用简单的XML或注解做配置和定义映射关系,将Java的POJOs(Plain Old Java Objects)映射成数据库中的记录.</code></pre><h2 id="2、MyBatis体系结构主要由以下几个关键部分"><a href="#2、MyBatis体系结构主要由以下几个关键部分" class="headerlink" title="2、MyBatis体系结构主要由以下几个关键部分"></a>2、MyBatis体系结构主要由以下几个关键部分</h2><h3 id="1-加载配置"><a href="#1-加载配置" class="headerlink" title="1)加载配置"></a>1)加载配置</h3><pre><code>配置有两种形式，一种是XML配置文件，另一种是Java代码的注解。MyBatis将SQL的配置信息加载策划给你为一个个的MappedStatement对象(包括了传入参数映射配置、执行的SQL语句、结果的映射配置)，并将其存储在内存中</code></pre><h3 id="2-SQL解析"><a href="#2-SQL解析" class="headerlink" title="2)SQL解析"></a>2)SQL解析</h3><pre><code>当API接口层接收到调用请求时，会接收到传入SQL的ID和传入对象(可以时Map、JavaBean或者基本数据类型)，MyBatis会根据SQL的ID找到对应的MappedStatement，然后根据传入参数对象对MappedStatement进行解析，解析后可以得到最终要执行的SQL语句和参数。</code></pre><h3 id="3-SQL执行"><a href="#3-SQL执行" class="headerlink" title="3)SQL执行"></a>3)SQL执行</h3><pre><code>将最终得到的SQL和参数拿到数据库进行执行，得到操作数据库的结果。</code></pre><h3 id="4-结果映射"><a href="#4-结果映射" class="headerlink" title="4)结果映射"></a>4)结果映射</h3><pre><code>将操作数据库的结果按照映射的配置进行转换，可以转换成HashMap、JavaBean或者基本数据类型，并将最终结果返回。</code></pre><h2 id="3、MyBatis的配置文件"><a href="#3、MyBatis的配置文件" class="headerlink" title="3、MyBatis的配置文件"></a>3、MyBatis的配置文件</h2><h3 id="MyBatis框架的XML配置文件包含下面两种类型"><a href="#MyBatis框架的XML配置文件包含下面两种类型" class="headerlink" title="MyBatis框架的XML配置文件包含下面两种类型"></a>MyBatis框架的XML配置文件包含下面两种类型</h3><h4 id="1-SqlMapConfig-xml-1个"><a href="#1-SqlMapConfig-xml-1个" class="headerlink" title="1)SqlMapConfig.xml(1个)"></a>1)SqlMapConfig.xml(1个)</h4><pre><code>主配置文件，用于指定数据库连接参数和框架参数</code></pre><h4 id="2-SqlMap-xml-n个"><a href="#2-SqlMap-xml-n个" class="headerlink" title="2)SqlMap.xml(n个)"></a>2)SqlMap.xml(n个)</h4><pre><code>映射定义文件，用于定义SQL语句和映射信息</code></pre><p>#
-    <configuration><br>        <environments default="environment"><br>                <environment id="environment"><br>                    <transactionmanager type="JDBC"><br>                    <datasource type="POOLED"><br>                        <property name="driver" value="oracle.jdbc.driver.OracleDriver"><br>                        <property name="url" value="jdbc:oracle:thin:@localhost:1521:meng"><br>                        <property name="username" value="mengqg"><br>                        <property name="password" value="mengqg"><br>                    </property></property></property></property></datasource><br>                </transactionmanager></environment><br>        </environments><br>        <mappers><br>            <mapper resource="com/sylas/day07/entity/Dept.xml"><br>        </mapper></mappers><br>    </configuration></p>
-<h5 id="Dept-xml"><a href="#Dept-xml" class="headerlink" title="Dept.xml"></a>Dept.xml</h5><pre><code>&lt;mapper namespace=&quot;com.sylas.day07.entity.DeptMapper&quot;&gt;
+4.MyBatis使用简单的XML或注解做配置和定义映射关系,将Java的POJOs(Plain Old Java Objects)映射成数据库中的记录.</code></pre><h2 id="2、MyBatis体系结构主要由以下几个关键部分"><a href="#2、MyBatis体系结构主要由以下几个关键部分" class="headerlink" title="2、MyBatis体系结构主要由以下几个关键部分"></a>2、MyBatis体系结构主要由以下几个关键部分</h2><h3 id="1-加载配置"><a href="#1-加载配置" class="headerlink" title="1)加载配置"></a>1)加载配置</h3><pre><code>配置有两种形式，一种是XML配置文件，另一种是Java代码的注解。MyBatis将SQL的配置信息加载策划给你为一个个的MappedStatement对象(包括了传入参数映射配置、执行的SQL语句、结果的映射配置)，并将其存储在内存中</code></pre><h3 id="2-SQL解析"><a href="#2-SQL解析" class="headerlink" title="2)SQL解析"></a>2)SQL解析</h3><pre><code>当API接口层接收到调用请求时，会接收到传入SQL的ID和传入对象(可以时Map、JavaBean或者基本数据类型)，MyBatis会根据SQL的ID找到对应的MappedStatement，然后根据传入参数对象对MappedStatement进行解析，解析后可以得到最终要执行的SQL语句和参数。</code></pre><h3 id="3-SQL执行"><a href="#3-SQL执行" class="headerlink" title="3)SQL执行"></a>3)SQL执行</h3><pre><code>将最终得到的SQL和参数拿到数据库进行执行，得到操作数据库的结果。</code></pre><h3 id="4-结果映射"><a href="#4-结果映射" class="headerlink" title="4)结果映射"></a>4)结果映射</h3><pre><code>将操作数据库的结果按照映射的配置进行转换，可以转换成HashMap、JavaBean或者基本数据类型，并将最终结果返回。</code></pre><h2 id="3、MyBatis的配置文件"><a href="#3、MyBatis的配置文件" class="headerlink" title="3、MyBatis的配置文件"></a>3、MyBatis的配置文件</h2><h3 id="MyBatis框架的XML配置文件包含下面两种类型"><a href="#MyBatis框架的XML配置文件包含下面两种类型" class="headerlink" title="MyBatis框架的XML配置文件包含下面两种类型"></a>MyBatis框架的XML配置文件包含下面两种类型</h3><h4 id="1-SqlMapConfig-xml-1个"><a href="#1-SqlMapConfig-xml-1个" class="headerlink" title="1)SqlMapConfig.xml(1个)"></a>1)SqlMapConfig.xml(1个)</h4><pre><code>主配置文件，用于指定数据库连接参数和框架参数</code></pre><h4 id="2-SqlMap-xml-n个"><a href="#2-SqlMap-xml-n个" class="headerlink" title="2)SqlMap.xml(n个)"></a>2)SqlMap.xml(n个)</h4><pre><code>映射定义文件，用于定义SQL语句和映射信息
+&lt;configuration&gt;
+    &lt;environments default = &quot;environment&quot;&gt;
+            &lt;environment id = &quot;environment&quot;&gt;
+                &lt;transactionManager type = &quot;JDBC&quot;/&gt;
+                &lt;dataSource type = &quot;POOLED&quot;&gt;
+                    &lt;property name = &quot;driver&quot; value = &quot;oracle.jdbc.driver.OracleDriver&quot;/&gt;
+                    &lt;property name = &quot;url&quot; value = &quot;jdbc:oracle:thin:@localhost:1521:meng&quot;/&gt;
+                    &lt;property name = &quot;username&quot; value = &quot;mengqg&quot;/&gt;
+                    &lt;property name = &quot;password&quot; value = &quot;mengqg&quot;/&gt;
+                &lt;/dataSource&gt;
+            &lt;/environment&gt;
+    &lt;/environments&gt;
+    &lt;mappers&gt;
+        &lt;mapper resource = &quot;com/sylas/day07/entity/Dept.xml&quot;/&gt;
+    &lt;/mappers&gt;
+&lt;/configuration&gt;</code></pre><h5 id="Dept-xml"><a href="#Dept-xml" class="headerlink" title="Dept.xml"></a>Dept.xml</h5><pre><code>&lt;mapper namespace=&quot;com.sylas.day07.entity.DeptMapper&quot;&gt;
     &lt;insert id = &quot;addDept&quot; parameterType = &quot;com.sylas.day07.entity.Dept&quot;&gt;
         insert into T_DEPT (DEPTNO, DNAME, LOC) values (#{deptno}, #{dname}, #{loc})
     &lt;/insert&gt;
@@ -280,7 +294,7 @@ public void testFindPage() throws IOException {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/03/MyBatis/" data-id="cjwhlhb390005rwug713lsvcl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/03/MyBatis/" data-id="cjwt8125100075sugtjj49yp6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>

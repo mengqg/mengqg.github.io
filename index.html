@@ -88,11 +88,88 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Spring-MyBatis"><a href="#Spring-MyBatis" class="headerlink" title="Spring+MyBatis"></a>Spring+MyBatis</h1><h2 id="Spring与MyBatis的整合"><a href="#Spring与MyBatis的整合" class="headerlink" title="Spring与MyBatis的整合"></a>Spring与MyBatis的整合</h2><h3 id="mybatis-spring-jar简介"><a href="#mybatis-spring-jar简介" class="headerlink" title="mybatis-spring.jar简介"></a>mybatis-spring.jar简介</h3>
+        <h1 id="Spring-MyBatis"><a href="#Spring-MyBatis" class="headerlink" title="Spring+MyBatis"></a>Spring+MyBatis</h1><h2 id="1、Spring与MyBatis的整合"><a href="#1、Spring与MyBatis的整合" class="headerlink" title="1、Spring与MyBatis的整合"></a>1、Spring与MyBatis的整合</h2><h3 id="1-mybatis-spring-jar简介"><a href="#1-mybatis-spring-jar简介" class="headerlink" title="1)mybatis-spring.jar简介"></a>1)mybatis-spring.jar简介</h3><pre><code>Spring与MyBatis整合需要引入一个mybatis-spring.jar文件包，该包整合有MyBatis提供，可以从MyBatis官网下载。
+mybatis-spring.jar提供了下面几个与整合相关的API
+· SqlSessionFactoryBean
+    - 为整合应用提供SqlSession对象资源
+· MapperFactoryBean
+    - 根据指定Mapper接口生成Bean实例
+· MapperScannerConfigurer
+    - 根据指定包批量扫描Mapper接口并生成实例</code></pre><h3 id="2-SqlSessionFactoryBean"><a href="#2-SqlSessionFactoryBean" class="headerlink" title="2) SqlSessionFactoryBean"></a>2) SqlSessionFactoryBean</h3><pre><code>   在单独使用MyBatis时，所有操作都是围绕SqlSession展开的，SqlSession是通过SqlSessionFactory获取的，
+SqlSessionFactory又是通过SqlSessionFactoryBuilder创建生成。
+   在Spring和MyBatis整合应用时，同样需要SqlSession，mybatis-spring.jar提供了一个SqlSessionFactoryBean.
+这个组件作用就是通过原SqlSessionFacotryBuilder生成SqlSessionFactory对象，为整合应用提供SqlSession对象。
+SqlSessionFactoryBean在applicationContext.xml中定义格式如下:
+&lt;bean id = &quot;sqlSessionFactory&quot; class = &quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+    &lt;!-- 指定连接资源 --&gt;
+    &lt;property name=&quot;dataSource&quot; ref = &quot;myDataSource&quot;/&gt;
+    &lt;!-- 指定映射文件 --&gt;
+    &lt;property name=&quot;mapperLocations&quot; value = &quot;classpath:com/sylas/day08/entity/*.xml&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;</code></pre><h3 id="3-MapperFactoryBean"><a href="#3-MapperFactoryBean" class="headerlink" title="3) MapperFactoryBean"></a>3) MapperFactoryBean</h3><pre><code>·  MapperFactoryBean作用是根据Mapper接口获取我们想要的Mapper对象,它封装了原有session.getMapper()功能实现
+·  在定义MapperFactoryBean时，需要注入一下两个属性
+    - 一个是SqlSessionFactoryBean对象,用于提供SqlSession
+    - 一个是要返回Mapper对象的Mapper接口
+&lt;bean id = &quot;deptMapper1&quot; class = &quot;org.mybatis.spring.mapper.MapperFactoryBean&quot;&gt;
+    &lt;!-- 指定Mapper接口 --&gt;
+    &lt;property name=&quot;mapperInterface&quot; value = &quot;com.sylas.day08.mapper.DeptMapper&quot;/&gt;
+    &lt;!-- 指定SqlSessionFactoryBean对象 --&gt;
+    &lt;property name=&quot;sqlSessionFactory&quot; ref = &quot;sqlSessionFactory&quot;/&gt;
+&lt;/bean&gt;</code></pre><h3 id="4-MapperScannerConfigurer"><a href="#4-MapperScannerConfigurer" class="headerlink" title="4) MapperScannerConfigurer"></a>4) MapperScannerConfigurer</h3><pre><code>· 在使用MapperFactoryBean时，有一个Mapper就需要定义一个对应的MapperFactoryBean。当Mapper比较少时可以，但遇到大量
+Mapper时就需要使用mybatis-spring.jar提供的MapperScannerConfigurer组件，通过这个组件会自动扫描各个Mapper接口，并
+注册对应的MapperFactoryBean对象
+· 在定义MapperScannerConfigurer时，只需要指定一个basePackage即可。basePackage用于指定Mapper接口所在的包，在这个
+包及其所有子包下面的Mapper接口都将被搜索到，并把它们注册为一个个MapperFactoryBean对象。多个包之间可以使用逗号或者分
+号进行分割
+&lt;bean class = &quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+    &lt;property name=&quot;basePackage&quot; value = &quot;com.sylas.day08.mapper&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+· 提示：sqlSessionFactory属性可以不用指定，会以Autowired方式自动注入
+   如果指定的某个包下并不完全是我们定义的Mapper接口，此时使用MapperScannerConfigurer的另外两个属性可以缩小搜索和
+注册范围，一个是annotationClass，另一个是markerInterface。
+· annotationClass：用于指定一个注解标记，当指定了annotationClass时，MapperScannerConfigurer将只注册使用了annotationClass注解标记的接口
+· markerInterface：用于指定一个接口，当指定了markerInterface时，MapperScannerConfigurer将只注册继承自markerInterface的接口
+实例
+&lt;bean class = &quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+    &lt;property name=&quot;basePackage&quot; value = &quot;com.sylas.day08&quot;/&gt;
+    &lt;property name=&quot;annotationClass&quot; value = &quot;com.sylas.dya08.annotation.MyBatisRepository&quot;/&gt;
+&lt;/bean&gt;
+上面配置含义：MapperScannerConfigurer自动扫描com.sylas.day08包下所有接口,遇到带@MyBatisRepository标记的
+将对应MapperFactoryBean对象注册
+@MyBatisRepository自定义注解标记代码如下
+public @interface MyBatisRepository{}</code></pre><h3 id="5-SqlSessionTemplate"><a href="#5-SqlSessionTemplate" class="headerlink" title="5) SqlSessionTemplate"></a>5) SqlSessionTemplate</h3><pre><code>上述整合完成后，程序可直接使用Spring容器中的Mapper接口实例进行编程。此外mybatis-spring.jar还提供了一个SqlSessionTemplate组件，也可以将该组件对象注入给程序中的DAO，在DAO中利用SqlSessionTemplate编程。
+基于SqlSessionTemplate的DAO实例代码如下</code></pre><h2 id="2、整合步骤介绍"><a href="#2、整合步骤介绍" class="headerlink" title="2、整合步骤介绍"></a>2、整合步骤介绍</h2><h3 id="1-基于SpringMVC和MyBatis技术开发的主要步骤如下"><a href="#1-基于SpringMVC和MyBatis技术开发的主要步骤如下" class="headerlink" title="1) 基于SpringMVC和MyBatis技术开发的主要步骤如下"></a>1) 基于SpringMVC和MyBatis技术开发的主要步骤如下</h3><pre><code>· 创建工程，搭建SpringMVC和MyBatis技术环境
+· 基于MapperScannerConfigurer方式整合MyBatis的Mapper接口(推荐)
+· 编写和配置SpringMVC的主要组件，例如Controller，HandlerMapping，ViewResolver等
+· 编写JSP视图组件，利用标签和表达式显示模型数据
+· 测试程序</code></pre><h3 id="2-如何搭建SpringMVCheMyBatis技术环境？"><a href="#2-如何搭建SpringMVCheMyBatis技术环境？" class="headerlink" title="2) 如何搭建SpringMVCheMyBatis技术环境？"></a>2) 如何搭建SpringMVCheMyBatis技术环境？</h3><pre><code>· 创建一个Web工程
+· 添加MyBatis相关技术环境
+    - 引入数据库驱动包和MyBatis开发包
+    - 引入dbcp连接池开发包
+· 添加SpringMVC相关技术环境
+    - 引入Spring IoC,jdbc,tx等支持的开发包
+    - 引入Spring webmvc支持的开发包
+    - 在src下添加applicationContext.xml配置文件
+    - 在web.xml中配置DispatcherServlet主控制器
+· 引入MyBatis和Spring整合开发包mybatis-spring.jar</code></pre><h3 id="3-如何基于MapperScannerConfigurer方式整合MyBatis的Mapper接口？"><a href="#3-如何基于MapperScannerConfigurer方式整合MyBatis的Mapper接口？" class="headerlink" title="3) 如何基于MapperScannerConfigurer方式整合MyBatis的Mapper接口？"></a>3) 如何基于MapperScannerConfigurer方式整合MyBatis的Mapper接口？</h3><pre><code>· 根据数据表编写实现类
+· 编写Mapper映射文件，在XML中添加SQL操作的定义
+· 编写Mapper接口，定义SQL操作方法
+· 在Spring配置文件中定义以下Bean
+    - DataSource
+    - SqlSessionFactoryBean
+    - MapperScannerConfigurer
+· 测试Spring容器的DAO组件</code></pre><h3 id="4-如何编写和配置SpringMVC的主要组件"><a href="#4-如何编写和配置SpringMVC的主要组件" class="headerlink" title="4) 如何编写和配置SpringMVC的主要组件?"></a>4) 如何编写和配置SpringMVC的主要组件?</h3><pre><code>· 编写Controller和请求处理方法
+· 配置&lt;mvc:annotation-driver/&gt;，支持@RequestMapping
+· 配置Controller组件
+    - 开启组件扫描，将Controller扫描到Spring容器
+    - 需要DAO时采用注入方式使用
+    - 在请求处理方法上使用@RequestMapping指定对应的请求
+· 配置ViewResolver</code></pre><h3 id="5-在JSP视图组件中如何显示模型数据？"><a href="#5-在JSP视图组件中如何显示模型数据？" class="headerlink" title="5)在JSP视图组件中如何显示模型数据？"></a>5)在JSP视图组件中如何显示模型数据？</h3><pre><code>· JSP可以使用JSTL标签库，需要引入开发包
+· JSP可以使用EL表达式
+· JSP可以使用SpringMVC的表单标签</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/04/Spring-MyBatis整合/" data-id="cjwhlhb2c0000rwugtdslnxqa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/04/Spring-MyBatis整合/" data-id="cjwt8124300005sugngc8iwra" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
@@ -129,9 +206,23 @@
         <h1 id="一、MyBatis"><a href="#一、MyBatis" class="headerlink" title="一、MyBatis"></a>一、MyBatis</h1><h2 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h2><pre><code>1.MyBatis最早源自Apache基金会的一个开源项目iBatis,2010年这个项目由Apache software foundation迁移到了google code,并且改名为MyBatis.
 2.MyBatis是支持普通SQL查询,存储过程和高级映射的优秀持久层框架.
 3.MyBatis封装了几乎所有的JDBC代码和参数的手工设置以及结果集的检索;
-4.MyBatis使用简单的XML或注解做配置和定义映射关系,将Java的POJOs(Plain Old Java Objects)映射成数据库中的记录.</code></pre><h2 id="2、MyBatis体系结构主要由以下几个关键部分"><a href="#2、MyBatis体系结构主要由以下几个关键部分" class="headerlink" title="2、MyBatis体系结构主要由以下几个关键部分"></a>2、MyBatis体系结构主要由以下几个关键部分</h2><h3 id="1-加载配置"><a href="#1-加载配置" class="headerlink" title="1)加载配置"></a>1)加载配置</h3><pre><code>配置有两种形式，一种是XML配置文件，另一种是Java代码的注解。MyBatis将SQL的配置信息加载策划给你为一个个的MappedStatement对象(包括了传入参数映射配置、执行的SQL语句、结果的映射配置)，并将其存储在内存中</code></pre><h3 id="2-SQL解析"><a href="#2-SQL解析" class="headerlink" title="2)SQL解析"></a>2)SQL解析</h3><pre><code>当API接口层接收到调用请求时，会接收到传入SQL的ID和传入对象(可以时Map、JavaBean或者基本数据类型)，MyBatis会根据SQL的ID找到对应的MappedStatement，然后根据传入参数对象对MappedStatement进行解析，解析后可以得到最终要执行的SQL语句和参数。</code></pre><h3 id="3-SQL执行"><a href="#3-SQL执行" class="headerlink" title="3)SQL执行"></a>3)SQL执行</h3><pre><code>将最终得到的SQL和参数拿到数据库进行执行，得到操作数据库的结果。</code></pre><h3 id="4-结果映射"><a href="#4-结果映射" class="headerlink" title="4)结果映射"></a>4)结果映射</h3><pre><code>将操作数据库的结果按照映射的配置进行转换，可以转换成HashMap、JavaBean或者基本数据类型，并将最终结果返回。</code></pre><h2 id="3、MyBatis的配置文件"><a href="#3、MyBatis的配置文件" class="headerlink" title="3、MyBatis的配置文件"></a>3、MyBatis的配置文件</h2><h3 id="MyBatis框架的XML配置文件包含下面两种类型"><a href="#MyBatis框架的XML配置文件包含下面两种类型" class="headerlink" title="MyBatis框架的XML配置文件包含下面两种类型"></a>MyBatis框架的XML配置文件包含下面两种类型</h3><h4 id="1-SqlMapConfig-xml-1个"><a href="#1-SqlMapConfig-xml-1个" class="headerlink" title="1)SqlMapConfig.xml(1个)"></a>1)SqlMapConfig.xml(1个)</h4><pre><code>主配置文件，用于指定数据库连接参数和框架参数</code></pre><h4 id="2-SqlMap-xml-n个"><a href="#2-SqlMap-xml-n个" class="headerlink" title="2)SqlMap.xml(n个)"></a>2)SqlMap.xml(n个)</h4><pre><code>映射定义文件，用于定义SQL语句和映射信息</code></pre><p>#
-    <configuration><br>        <environments default="environment"><br>                <environment id="environment"><br>                    <transactionmanager type="JDBC"><br>                    <datasource type="POOLED"><br>                        <property name="driver" value="oracle.jdbc.driver.OracleDriver"><br>                        <property name="url" value="jdbc:oracle:thin:@localhost:1521:meng"><br>                        <property name="username" value="mengqg"><br>                        <property name="password" value="mengqg"><br>                    </property></property></property></property></datasource><br>                </transactionmanager></environment><br>        </environments><br>        <mappers><br>            <mapper resource="com/sylas/day07/entity/Dept.xml"><br>        </mapper></mappers><br>    </configuration></p>
-<h5 id="Dept-xml"><a href="#Dept-xml" class="headerlink" title="Dept.xml"></a>Dept.xml</h5><pre><code>&lt;mapper namespace=&quot;com.sylas.day07.entity.DeptMapper&quot;&gt;
+4.MyBatis使用简单的XML或注解做配置和定义映射关系,将Java的POJOs(Plain Old Java Objects)映射成数据库中的记录.</code></pre><h2 id="2、MyBatis体系结构主要由以下几个关键部分"><a href="#2、MyBatis体系结构主要由以下几个关键部分" class="headerlink" title="2、MyBatis体系结构主要由以下几个关键部分"></a>2、MyBatis体系结构主要由以下几个关键部分</h2><h3 id="1-加载配置"><a href="#1-加载配置" class="headerlink" title="1)加载配置"></a>1)加载配置</h3><pre><code>配置有两种形式，一种是XML配置文件，另一种是Java代码的注解。MyBatis将SQL的配置信息加载策划给你为一个个的MappedStatement对象(包括了传入参数映射配置、执行的SQL语句、结果的映射配置)，并将其存储在内存中</code></pre><h3 id="2-SQL解析"><a href="#2-SQL解析" class="headerlink" title="2)SQL解析"></a>2)SQL解析</h3><pre><code>当API接口层接收到调用请求时，会接收到传入SQL的ID和传入对象(可以时Map、JavaBean或者基本数据类型)，MyBatis会根据SQL的ID找到对应的MappedStatement，然后根据传入参数对象对MappedStatement进行解析，解析后可以得到最终要执行的SQL语句和参数。</code></pre><h3 id="3-SQL执行"><a href="#3-SQL执行" class="headerlink" title="3)SQL执行"></a>3)SQL执行</h3><pre><code>将最终得到的SQL和参数拿到数据库进行执行，得到操作数据库的结果。</code></pre><h3 id="4-结果映射"><a href="#4-结果映射" class="headerlink" title="4)结果映射"></a>4)结果映射</h3><pre><code>将操作数据库的结果按照映射的配置进行转换，可以转换成HashMap、JavaBean或者基本数据类型，并将最终结果返回。</code></pre><h2 id="3、MyBatis的配置文件"><a href="#3、MyBatis的配置文件" class="headerlink" title="3、MyBatis的配置文件"></a>3、MyBatis的配置文件</h2><h3 id="MyBatis框架的XML配置文件包含下面两种类型"><a href="#MyBatis框架的XML配置文件包含下面两种类型" class="headerlink" title="MyBatis框架的XML配置文件包含下面两种类型"></a>MyBatis框架的XML配置文件包含下面两种类型</h3><h4 id="1-SqlMapConfig-xml-1个"><a href="#1-SqlMapConfig-xml-1个" class="headerlink" title="1)SqlMapConfig.xml(1个)"></a>1)SqlMapConfig.xml(1个)</h4><pre><code>主配置文件，用于指定数据库连接参数和框架参数</code></pre><h4 id="2-SqlMap-xml-n个"><a href="#2-SqlMap-xml-n个" class="headerlink" title="2)SqlMap.xml(n个)"></a>2)SqlMap.xml(n个)</h4><pre><code>映射定义文件，用于定义SQL语句和映射信息
+&lt;configuration&gt;
+    &lt;environments default = &quot;environment&quot;&gt;
+            &lt;environment id = &quot;environment&quot;&gt;
+                &lt;transactionManager type = &quot;JDBC&quot;/&gt;
+                &lt;dataSource type = &quot;POOLED&quot;&gt;
+                    &lt;property name = &quot;driver&quot; value = &quot;oracle.jdbc.driver.OracleDriver&quot;/&gt;
+                    &lt;property name = &quot;url&quot; value = &quot;jdbc:oracle:thin:@localhost:1521:meng&quot;/&gt;
+                    &lt;property name = &quot;username&quot; value = &quot;mengqg&quot;/&gt;
+                    &lt;property name = &quot;password&quot; value = &quot;mengqg&quot;/&gt;
+                &lt;/dataSource&gt;
+            &lt;/environment&gt;
+    &lt;/environments&gt;
+    &lt;mappers&gt;
+        &lt;mapper resource = &quot;com/sylas/day07/entity/Dept.xml&quot;/&gt;
+    &lt;/mappers&gt;
+&lt;/configuration&gt;</code></pre><h5 id="Dept-xml"><a href="#Dept-xml" class="headerlink" title="Dept.xml"></a>Dept.xml</h5><pre><code>&lt;mapper namespace=&quot;com.sylas.day07.entity.DeptMapper&quot;&gt;
     &lt;insert id = &quot;addDept&quot; parameterType = &quot;com.sylas.day07.entity.Dept&quot;&gt;
         insert into T_DEPT (DEPTNO, DNAME, LOC) values (#{deptno}, #{dname}, #{loc})
     &lt;/insert&gt;
@@ -315,7 +406,7 @@ public void testFindPage() throws IOException {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/03/MyBatis/" data-id="cjwhlhb390005rwug713lsvcl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/03/MyBatis/" data-id="cjwt8125100075sugtjj49yp6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
@@ -422,7 +513,7 @@ public class HelloController{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/01/Spring注解/" data-id="cjwhlhb360004rwug7ugbqxk2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/01/Spring注解/" data-id="cjwt8124h00035sugsng5ezgm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
@@ -473,7 +564,7 @@ public class HelloController{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/01/hello-world/" data-id="cjwhlhb2j0001rwugiy0fxxtf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/01/hello-world/" data-id="cjwt8124c00015sugrq0ap84v" class="article-share-link">Share</a>
       
       
     </footer>
