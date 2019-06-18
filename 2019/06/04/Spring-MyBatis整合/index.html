@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Sylas的博客">
 <meta property="og:description" content="Spring+MyBatis1、Spring与MyBatis的整合1)mybatis-spring.jar简介Spring与MyBatis整合需要引入一个mybatis-spring.jar文件包，该包整合有MyBatis提供，可以从MyBatis官网下载。 mybatis-spring.jar提供了下面几个与整合相关的API · SqlSessionFactoryBean     - 为整合应用">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-12T12:35:21.725Z">
+<meta property="og:updated_time" content="2019-06-18T07:04:31.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring+MyBatis整合">
 <meta name="twitter:description" content="Spring+MyBatis1、Spring与MyBatis的整合1)mybatis-spring.jar简介Spring与MyBatis整合需要引入一个mybatis-spring.jar文件包，该包整合有MyBatis提供，可以从MyBatis官网下载。 mybatis-spring.jar提供了下面几个与整合相关的API · SqlSessionFactoryBean     - 为整合应用">
@@ -140,7 +140,40 @@ Mapper时就需要使用mybatis-spring.jar提供的MapperScannerConfigurer组件
 将对应MapperFactoryBean对象注册
 @MyBatisRepository自定义注解标记代码如下
 public @interface MyBatisRepository{}</code></pre><h3 id="5-SqlSessionTemplate"><a href="#5-SqlSessionTemplate" class="headerlink" title="5) SqlSessionTemplate"></a>5) SqlSessionTemplate</h3><pre><code>上述整合完成后，程序可直接使用Spring容器中的Mapper接口实例进行编程。此外mybatis-spring.jar还提供了一个SqlSessionTemplate组件，也可以将该组件对象注入给程序中的DAO，在DAO中利用SqlSessionTemplate编程。
-基于SqlSessionTemplate的DAO实例代码如下</code></pre><h2 id="2、整合步骤介绍"><a href="#2、整合步骤介绍" class="headerlink" title="2、整合步骤介绍"></a>2、整合步骤介绍</h2><h3 id="1-基于SpringMVC和MyBatis技术开发的主要步骤如下"><a href="#1-基于SpringMVC和MyBatis技术开发的主要步骤如下" class="headerlink" title="1) 基于SpringMVC和MyBatis技术开发的主要步骤如下"></a>1) 基于SpringMVC和MyBatis技术开发的主要步骤如下</h3><pre><code>· 创建工程，搭建SpringMVC和MyBatis技术环境
+基于SqlSessionTemplate的DAO实例代码如下</code></pre><h4 id="①-基于SqlSessionTemplate的DAO实例代码如下"><a href="#①-基于SqlSessionTemplate的DAO实例代码如下" class="headerlink" title="① 基于SqlSessionTemplate的DAO实例代码如下"></a>① 基于SqlSessionTemplate的DAO实例代码如下</h4><pre><code>@Repository
+public class MyBatisDeptDAO implements DeptDAO {
+private SqlSessionTemplate template;
+    @Autowired
+    public void setSqlSessionTemplate(SqlSessionTemplate template) {
+        this.template = template;
+    }
+    @Override
+    public List&lt;Dept&gt; findAll() {
+        List&lt;Dept&gt; list = template.selectList(&quot;findAll&quot;);
+        return list;
+    }
+}</code></pre><h4 id="②-基于SqlSessionTemplate的DAO配置如下"><a href="#②-基于SqlSessionTemplate的DAO配置如下" class="headerlink" title="② 基于SqlSessionTemplate的DAO配置如下"></a>② 基于SqlSessionTemplate的DAO配置如下</h4><pre><code>&lt;util:properties id = &quot;jdbcProp&quot; location = &quot;classpath:db.properties&quot;/&gt;
+
+&lt;bean id = &quot;myDataSource&quot; class = &quot;org.apache.commons.dbcp.BasicDataSource&quot;
+    destroy-method = &quot;close&quot;&gt;
+    &lt;property name=&quot;driverClassName&quot; value = &quot;#{jdbcProp.driver}&quot;/&gt;
+    &lt;property name=&quot;url&quot; value = &quot;#{jdbcProp.url}&quot;/&gt;
+    &lt;property name=&quot;username&quot; value = &quot;#{jdbcProp.user}&quot;/&gt;
+    &lt;property name=&quot;password&quot; value = &quot;#{jdbcProp.pwd}&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id = &quot;sqlSessionFactory&quot; class = &quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+    &lt;property name=&quot;dataSource&quot; ref = &quot;myDataSource&quot;/&gt;
+    &lt;property name=&quot;mapperLocations&quot; value = &quot;classpath:com/sylas/day08/part1/entity/*.xml&quot;/&gt;
+&lt;/bean&gt;
+
+&lt;!-- 定义SqlSessionTemplate --&gt;
+&lt;bean id = &quot;sqlSessionTemplate&quot; class = &quot;org.mybatis.spring.SqlSessionTemplate&quot;&gt;
+    &lt;constructor-arg index = &quot;0&quot; ref = &quot;sqlSessionFactory&quot;/&gt;
+&lt;/bean&gt;
+
+&lt;!-- 扫描DAO并注入template --&gt;
+&lt;context:component-scan base-package=&quot;com.sylas.day08.part1&quot;/&gt;</code></pre><h2 id="2、整合步骤介绍"><a href="#2、整合步骤介绍" class="headerlink" title="2、整合步骤介绍"></a>2、整合步骤介绍</h2><h3 id="1-基于SpringMVC和MyBatis技术开发的主要步骤如下"><a href="#1-基于SpringMVC和MyBatis技术开发的主要步骤如下" class="headerlink" title="1) 基于SpringMVC和MyBatis技术开发的主要步骤如下"></a>1) 基于SpringMVC和MyBatis技术开发的主要步骤如下</h3><pre><code>· 创建工程，搭建SpringMVC和MyBatis技术环境
 · 基于MapperScannerConfigurer方式整合MyBatis的Mapper接口(推荐)
 · 编写和配置SpringMVC的主要组件，例如Controller，HandlerMapping，ViewResolver等
 · 编写JSP视图组件，利用标签和表达式显示模型数据
@@ -168,11 +201,11 @@ public @interface MyBatisRepository{}</code></pre><h3 id="5-SqlSessionTemplate">
     - 在请求处理方法上使用@RequestMapping指定对应的请求
 · 配置ViewResolver</code></pre><h3 id="5-在JSP视图组件中如何显示模型数据？"><a href="#5-在JSP视图组件中如何显示模型数据？" class="headerlink" title="5)在JSP视图组件中如何显示模型数据？"></a>5)在JSP视图组件中如何显示模型数据？</h3><pre><code>· JSP可以使用JSTL标签库，需要引入开发包
 · JSP可以使用EL表达式
-· JSP可以使用SpringMVC的表单标签</code></pre>
+· JSP可以使用SpringMVC的表单标签</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void test()&#123;</span><br><span class="line">	System.out.pringln(&quot;Hello World!&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/04/Spring-MyBatis整合/" data-id="cjwu1tlhd0000gougfm1w9ac7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/04/Spring-MyBatis整合/" data-id="cjx1gq4kq000008ugp3oyvgo7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
@@ -182,6 +215,15 @@ public @interface MyBatisRepository{}</code></pre><h3 id="5-SqlSessionTemplate">
   
     
 <nav id="article-nav">
+  
+    <a href="/2019/06/17/CPU过高时检查方法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          CPU过高时检查方法
+        
+      </div>
+    </a>
   
   
     <a href="/2019/06/03/MyBatis/" id="article-nav-older" class="article-nav-link-wrap">
@@ -205,7 +247,7 @@ public @interface MyBatisRepository{}</code></pre><h3 id="5-SqlSessionTemplate">
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
     </div>
   </div>
 
@@ -215,7 +257,7 @@ public @interface MyBatisRepository{}</code></pre><h3 id="5-SqlSessionTemplate">
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/SSM/" style="font-size: 10px;">SSM</a>
+      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/SSM/" style="font-size: 20px;">SSM</a>
     </div>
   </div>
 
@@ -235,6 +277,10 @@ public @interface MyBatisRepository{}</code></pre><h3 id="5-SqlSessionTemplate">
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/06/17/CPU过高时检查方法/">CPU过高时检查方法</a>
+          </li>
         
           <li>
             <a href="/2019/06/04/Spring-MyBatis整合/">Spring+MyBatis整合</a>
