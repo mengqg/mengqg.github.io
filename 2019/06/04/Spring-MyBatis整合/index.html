@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Sylas的博客">
 <meta property="og:description" content="Spring+MyBatis1、Spring与MyBatis的整合1)mybatis-spring.jar简介Spring与MyBatis整合需要引入一个mybatis-spring.jar文件包，该包整合有MyBatis提供，可以从MyBatis官网下载。 mybatis-spring.jar提供了下面几个与整合相关的API · SqlSessionFactoryBean     - 为整合应用">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-18T07:04:31.650Z">
+<meta property="og:updated_time" content="2019-06-18T07:07:01.420Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring+MyBatis整合">
 <meta name="twitter:description" content="Spring+MyBatis1、Spring与MyBatis的整合1)mybatis-spring.jar简介Spring与MyBatis整合需要引入一个mybatis-spring.jar文件包，该包整合有MyBatis提供，可以从MyBatis官网下载。 mybatis-spring.jar提供了下面几个与整合相关的API · SqlSessionFactoryBean     - 为整合应用">
@@ -173,7 +173,9 @@ private SqlSessionTemplate template;
 &lt;/bean&gt;
 
 &lt;!-- 扫描DAO并注入template --&gt;
-&lt;context:component-scan base-package=&quot;com.sylas.day08.part1&quot;/&gt;</code></pre><h2 id="2、整合步骤介绍"><a href="#2、整合步骤介绍" class="headerlink" title="2、整合步骤介绍"></a>2、整合步骤介绍</h2><h3 id="1-基于SpringMVC和MyBatis技术开发的主要步骤如下"><a href="#1-基于SpringMVC和MyBatis技术开发的主要步骤如下" class="headerlink" title="1) 基于SpringMVC和MyBatis技术开发的主要步骤如下"></a>1) 基于SpringMVC和MyBatis技术开发的主要步骤如下</h3><pre><code>· 创建工程，搭建SpringMVC和MyBatis技术环境
+&lt;context:component-scan base-package=&quot;com.sylas.day08.part1&quot;/&gt;</code></pre><h4 id="③-Test"><a href="#③-Test" class="headerlink" title="③ Test"></a>③ Test</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">	public void testTemplateFindAll() &#123;</span><br><span class="line">		ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;applicationContext-template.xml&quot;);</span><br><span class="line">		DeptDAO deptDao = ac.getBean(&quot;myBatisDeptDAO&quot;, DeptDAO.class);</span><br><span class="line">		List&lt;Dept&gt; list = deptDao.findAll();</span><br><span class="line">		for(Dept dept : list) &#123;</span><br><span class="line">			System.out.println(dept.getDeptno() + &quot;;&quot;+dept.getDname()+&quot;;&quot;+dept.getLoc());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、整合步骤介绍"><a href="#2、整合步骤介绍" class="headerlink" title="2、整合步骤介绍"></a>2、整合步骤介绍</h2><h3 id="1-基于SpringMVC和MyBatis技术开发的主要步骤如下"><a href="#1-基于SpringMVC和MyBatis技术开发的主要步骤如下" class="headerlink" title="1) 基于SpringMVC和MyBatis技术开发的主要步骤如下"></a>1) 基于SpringMVC和MyBatis技术开发的主要步骤如下</h3><pre><code>· 创建工程，搭建SpringMVC和MyBatis技术环境
 · 基于MapperScannerConfigurer方式整合MyBatis的Mapper接口(推荐)
 · 编写和配置SpringMVC的主要组件，例如Controller，HandlerMapping，ViewResolver等
 · 编写JSP视图组件，利用标签和表达式显示模型数据
@@ -205,7 +207,7 @@ private SqlSessionTemplate template;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/04/Spring-MyBatis整合/" data-id="cjx1gq4kq000008ugp3oyvgo7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/04/Spring-MyBatis整合/" data-id="cjx1p22iu0008j8ugf64ztppr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
