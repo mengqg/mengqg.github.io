@@ -5,20 +5,20 @@
   
 
   
-  <title>CPU过高时检查方法 | Sylas的博客</title>
+  <title>MyBatis动态SQL | Sylas的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="第一步top查看进程，第二步到Java的bin目录下执行./jstack +进程号">
-<meta name="keywords" content="Linux">
+  <meta name="description" content="1.MyBatis动态SQL1.1 动态SQL简介1.1.1 动态SQL简介 动态SQL是MyBatis框架中强大特性之一。在一些组合查询页面，需要根据用户输入的查询条件生成不同的查询SQL，这在JDBC或其他相似框架中需要在代码中拼写SQL，经常容易出错，但是在MyBatis中可以解决这种问题。 使用动态SQL元素与JSTL相似，它允许我们在XML中构建不同的SQL语句。常用的元素如下： 判断元">
+<meta name="keywords" content="SSM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CPU过高时检查方法">
-<meta property="og:url" content="http://yoursite.com/2019/06/17/CPU过高时检查方法/index.html">
+<meta property="og:title" content="MyBatis动态SQL">
+<meta property="og:url" content="http://yoursite.com/2019/06/19/MyBatis动态SQL/index.html">
 <meta property="og:site_name" content="Sylas的博客">
-<meta property="og:description" content="第一步top查看进程，第二步到Java的bin目录下执行./jstack +进程号">
+<meta property="og:description" content="1.MyBatis动态SQL1.1 动态SQL简介1.1.1 动态SQL简介 动态SQL是MyBatis框架中强大特性之一。在一些组合查询页面，需要根据用户输入的查询条件生成不同的查询SQL，这在JDBC或其他相似框架中需要在代码中拼写SQL，经常容易出错，但是在MyBatis中可以解决这种问题。 使用动态SQL元素与JSTL相似，它允许我们在XML中构建不同的SQL语句。常用的元素如下： 判断元">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-17T07:09:24.149Z">
+<meta property="og:updated_time" content="2019-06-19T13:52:14.561Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CPU过高时检查方法">
-<meta name="twitter:description" content="第一步top查看进程，第二步到Java的bin目录下执行./jstack +进程号">
+<meta name="twitter:title" content="MyBatis动态SQL">
+<meta name="twitter:description" content="1.MyBatis动态SQL1.1 动态SQL简介1.1.1 动态SQL简介 动态SQL是MyBatis框架中强大特性之一。在一些组合查询页面，需要根据用户输入的查询条件生成不同的查询SQL，这在JDBC或其他相似框架中需要在代码中拼写SQL，经常容易出错，但是在MyBatis中可以解决这种问题。 使用动态SQL元素与JSTL相似，它允许我们在XML中构建不同的SQL语句。常用的元素如下： 判断元">
   
     <link rel="alternate" href="/atom.xml" title="Sylas的博客" type="application/atom+xml">
   
@@ -69,10 +69,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-CPU过高时检查方法" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-MyBatis动态SQL" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/06/17/CPU过高时检查方法/" class="article-date">
-  <time datetime="2019-06-17T07:08:27.000Z" itemprop="datePublished">2019-06-17</time>
+    <a href="/2019/06/19/MyBatis动态SQL/" class="article-date">
+  <time datetime="2019-06-19T13:34:53.000Z" itemprop="datePublished">2019-06-19</time>
 </a>
     
   </div>
@@ -83,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      CPU过高时检查方法
+      MyBatis动态SQL
     </h1>
   
 
@@ -91,15 +91,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>第一步top查看进程，<br>第二步到Java的bin目录下执行./jstack +进程号</p>
+        <h1 id="1-MyBatis动态SQL"><a href="#1-MyBatis动态SQL" class="headerlink" title="1.MyBatis动态SQL"></a>1.MyBatis动态SQL</h1><h2 id="1-1-动态SQL简介"><a href="#1-1-动态SQL简介" class="headerlink" title="1.1 动态SQL简介"></a>1.1 动态SQL简介</h2><h3 id="1-1-1-动态SQL简介"><a href="#1-1-1-动态SQL简介" class="headerlink" title="1.1.1 动态SQL简介"></a>1.1.1 动态SQL简介</h3><ul>
+<li>动态SQL是MyBatis框架中强大特性之一。在一些组合查询页面，需要根据用户输入的查询条件生成不同的查询SQL，这在JDBC或其他相似框架中需要在代码中拼写SQL，经常容易出错，但是在MyBatis中可以解决这种问题。</li>
+<li>使用动态SQL元素与JSTL相似，它允许我们在XML中构建不同的SQL语句。常用的元素如下：<ul>
+<li>判断元素：if,choose</li>
+<li>关键字元素：where,set,trim</li>
+<li>循环元素：foreach<h2 id="1-2-进行判断"><a href="#1-2-进行判断" class="headerlink" title="1.2 进行判断"></a>1.2 进行判断</h2><h3 id="1-2-1-if元素"><a href="#1-2-1-if元素" class="headerlink" title="1.2.1 if元素"></a>1.2.1 if元素</h3></li>
+</ul>
+</li>
+<li>if元素是简单的条件判断逻辑，满足指定条件时追加if元素内的SQL，不满足条件时不追加。使用格式如下：</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/17/CPU过高时检查方法/" data-id="cjx3auk4i0000tgugs0ya6z1k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/19/MyBatis动态SQL/" data-id="cjx3auk4r0001tgug2d4c1hc3" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
 
     </footer>
   </div>
@@ -107,19 +116,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/06/19/MyBatis动态SQL/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          MyBatis动态SQL
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/06/04/Spring-MyBatis整合/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/06/17/CPU过高时检查方法/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Spring+MyBatis整合</div>
+      <div class="article-nav-title">CPU过高时检查方法</div>
     </a>
   
 </nav>
