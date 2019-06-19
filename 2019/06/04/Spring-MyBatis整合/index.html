@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Sylas的博客">
 <meta property="og:description" content="Spring+MyBatis1、Spring与MyBatis的整合1)mybatis-spring.jar简介Spring与MyBatis整合需要引入一个mybatis-spring.jar文件包，该包整合有MyBatis提供，可以从MyBatis官网下载。 mybatis-spring.jar提供了下面几个与整合相关的API · SqlSessionFactoryBean     - 为整合应用">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-18T07:07:01.420Z">
+<meta property="og:updated_time" content="2019-06-19T12:39:41.477Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring+MyBatis整合">
 <meta name="twitter:description" content="Spring+MyBatis1、Spring与MyBatis的整合1)mybatis-spring.jar简介Spring与MyBatis整合需要引入一个mybatis-spring.jar文件包，该包整合有MyBatis提供，可以从MyBatis官网下载。 mybatis-spring.jar提供了下面几个与整合相关的API · SqlSessionFactoryBean     - 为整合应用">
@@ -203,11 +203,23 @@ private SqlSessionTemplate template;
     - 在请求处理方法上使用@RequestMapping指定对应的请求
 · 配置ViewResolver</code></pre><h3 id="5-在JSP视图组件中如何显示模型数据？"><a href="#5-在JSP视图组件中如何显示模型数据？" class="headerlink" title="5)在JSP视图组件中如何显示模型数据？"></a>5)在JSP视图组件中如何显示模型数据？</h3><pre><code>· JSP可以使用JSTL标签库，需要引入开发包
 · JSP可以使用EL表达式
-· JSP可以使用SpringMVC的表单标签</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void test()&#123;</span><br><span class="line">	System.out.pringln(&quot;Hello World!&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+· JSP可以使用SpringMVC的表单标签</code></pre><h1 id="2、企业级项目环境Spring和MyBatis整合方法"><a href="#2、企业级项目环境Spring和MyBatis整合方法" class="headerlink" title="2、企业级项目环境Spring和MyBatis整合方法"></a>2、企业级项目环境Spring和MyBatis整合方法</h1><h2 id="1、导包"><a href="#1、导包" class="headerlink" title="1、导包"></a>1、导包</h2><blockquote>
+<p>创建WEB项目，并导入如下开发包</p>
+<ul>
+<li>数据库驱动包、连接池包、MyBatis开发包</li>
+<li>Spring开发包</li>
+<li>JSTL开发包</li>
+<li>Spring整合MyBatis开发包<br>导入之后，项目的包结构如右图<br>在src下创建applicationContext.xml,并配置如下内容</li>
+<li>配置数据源</li>
+<li>配置SqlSessionFactory</li>
+<li>配置MyBatis注解（该注解需要自定义）</li>
+</ul>
+</blockquote>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/04/Spring-MyBatis整合/" data-id="cjx1p22iu0008j8ugf64ztppr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/04/Spring-MyBatis整合/" data-id="cjx3851on0008icugi7t197cl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
