@@ -5,15 +5,20 @@
   
 
   
-  <title>Tag: Linux | Sylas的博客</title>
+  <title>Linux基本命令 | Sylas的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Sylas的博客">
-<meta property="og:url" content="http://yoursite.com/tags/Linux/index.html">
+  <meta name="description" content="1、从文件【catalina.out】中查询字符串【TYBX20190618001】 只查询字符串1cat catalina.out |grep &amp;quot;&amp;lt;BILLCODE&amp;gt;TYBX20190618001&amp;lt;/BILLCODE&amp;gt;&amp;quot;    1grep &amp;quot;&amp;lt;BILLCODE&amp;gt;TYBX20190618001&amp;lt;/BILLCODE&amp;gt;&amp;qu">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux基本命令">
+<meta property="og:url" content="http://yoursite.com/2019/06/26/Linux基本命令/index.html">
 <meta property="og:site_name" content="Sylas的博客">
+<meta property="og:description" content="1、从文件【catalina.out】中查询字符串【TYBX20190618001】 只查询字符串1cat catalina.out |grep &amp;quot;&amp;lt;BILLCODE&amp;gt;TYBX20190618001&amp;lt;/BILLCODE&amp;gt;&amp;quot;    1grep &amp;quot;&amp;lt;BILLCODE&amp;gt;TYBX20190618001&amp;lt;/BILLCODE&amp;gt;&amp;qu">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-26T07:38:13.745Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sylas的博客">
+<meta name="twitter:title" content="Linux基本命令">
+<meta name="twitter:description" content="1、从文件【catalina.out】中查询字符串【TYBX20190618001】 只查询字符串1cat catalina.out |grep &amp;quot;&amp;lt;BILLCODE&amp;gt;TYBX20190618001&amp;lt;/BILLCODE&amp;gt;&amp;quot;    1grep &amp;quot;&amp;lt;BILLCODE&amp;gt;TYBX20190618001&amp;lt;/BILLCODE&amp;gt;&amp;qu">
   
     <link rel="alternate" href="/atom.xml" title="Sylas的博客" type="application/atom+xml">
   
@@ -64,59 +69,72 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/06/26/Linux基本命令/" class="archive-article-date">
-  <time datetime="2019-06-26T07:33:37.000Z" itemprop="datePublished">Jun 26</time>
+        <section id="main"><article id="post-Linux基本命令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/26/Linux基本命令/" class="article-date">
+  <time datetime="2019-06-26T07:33:37.000Z" itemprop="datePublished">2019-06-26</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/26/Linux基本命令/">Linux基本命令</a>
+    <h1 class="article-title" itemprop="name">
+      Linux基本命令
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/06/17/CPU过高时检查方法/" class="archive-article-date">
-  <time datetime="2019-06-17T07:08:27.000Z" itemprop="datePublished">Jun 17</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/17/CPU过高时检查方法/">CPU过高时检查方法</a>
-    </h1>
-  
+        <h4 id="1、从文件【catalina-out】中查询字符串【TYBX20190618001】"><a href="#1、从文件【catalina-out】中查询字符串【TYBX20190618001】" class="headerlink" title="1、从文件【catalina.out】中查询字符串【TYBX20190618001】"></a>1、从文件【catalina.out】中查询字符串【<billcode>TYBX20190618001</billcode>】</h4><ul>
+<li>只查询字符串<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat catalina.out |grep &quot;&lt;BILLCODE&gt;TYBX20190618001&lt;/BILLCODE&gt;&quot;</span><br></pre></td></tr></table></figure>
 
-    </header>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &quot;&lt;BILLCODE&gt;TYBX20190618001&lt;/BILLCODE&gt;&quot; catalina.out</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询字符串以及后面10条<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -A 10 &quot;&lt;BILLCODE&gt;TYBX20190618001&lt;/BILLCODE&gt;&quot; catalina.out</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/26/Linux基本命令/" data-id="cjxdacp0g0003m8ugu8n2us3b" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/06/26/CXF实现webService服务/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          CXF实现webService服务
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2019/06/20/Spring与Ajax/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spring与Ajax</div>
+    </a>
   
+</nav>
 
+  
+</article>
 
 </section>
         

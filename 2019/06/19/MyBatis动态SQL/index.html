@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Sylas的博客">
 <meta property="og:description" content="1.MyBatis动态SQL1.1 动态SQL简介1.1.1 动态SQL简介 动态SQL是MyBatis框架中强大特性之一。在一些组合查询页面，需要根据用户输入的查询条件生成不同的查询SQL，这在JDBC或其他相似框架中需要在代码中拼写SQL，经常容易出错，但是在MyBatis中可以解决这种问题。 使用动态SQL元素与JSTL相似，它允许我们在XML中构建不同的SQL语句。常用的元素如下： 判断元">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-19T13:52:14.561Z">
+<meta property="og:updated_time" content="2019-06-20T09:43:49.153Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MyBatis动态SQL">
 <meta name="twitter:description" content="1.MyBatis动态SQL1.1 动态SQL简介1.1.1 动态SQL简介 动态SQL是MyBatis框架中强大特性之一。在一些组合查询页面，需要根据用户输入的查询条件生成不同的查询SQL，这在JDBC或其他相似框架中需要在代码中拼写SQL，经常容易出错，但是在MyBatis中可以解决这种问题。 使用动态SQL元素与JSTL相似，它允许我们在XML中构建不同的SQL语句。常用的元素如下： 判断元">
@@ -96,16 +96,80 @@
 <li>使用动态SQL元素与JSTL相似，它允许我们在XML中构建不同的SQL语句。常用的元素如下：<ul>
 <li>判断元素：if,choose</li>
 <li>关键字元素：where,set,trim</li>
-<li>循环元素：foreach<h2 id="1-2-进行判断"><a href="#1-2-进行判断" class="headerlink" title="1.2 进行判断"></a>1.2 进行判断</h2><h3 id="1-2-1-if元素"><a href="#1-2-1-if元素" class="headerlink" title="1.2.1 if元素"></a>1.2.1 if元素</h3></li>
+<li>循环元素：foreach</li>
 </ul>
 </li>
-<li>if元素是简单的条件判断逻辑，满足指定条件时追加if元素内的SQL，不满足条件时不追加。使用格式如下：</li>
 </ul>
+<h2 id="1-2-进行判断"><a href="#1-2-进行判断" class="headerlink" title="1.2 进行判断"></a>1.2 进行判断</h2><h3 id="1-2-1-if元素"><a href="#1-2-1-if元素" class="headerlink" title="1.2.1 if元素"></a>1.2.1 if元素</h3><ul>
+<li><p>if元素是简单的条件判断逻辑，满足指定条件时追加if元素内的SQL，不满足条件时不追加。使用格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;select&gt;</span><br><span class="line">	SQL语句1</span><br><span class="line">	&lt;if test=&quot;条件表达式&quot;&gt;</span><br><span class="line">		SQL语句2</span><br><span class="line">	&lt;/if&gt;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>if元素最常见的使用时在where字句部分，根据不同情况追加不同的SQL条件。实例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id = &quot;findByDeptNo&quot; parameterType = &quot;Emp&quot; resultType = &quot;Emp&quot;&gt;</span><br><span class="line">	select * from EMP</span><br><span class="line">	&lt;if test = &quot;deptno != null&quot;&gt;</span><br><span class="line">		where DEPTNO = #&#123;deptno&#125;</span><br><span class="line">	&lt;/if&gt;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
 
+</li>
+</ul>
+<h3 id="1-2-2-choose元素"><a href="#1-2-2-choose元素" class="headerlink" title="1.2.2 choose元素"></a>1.2.2 choose元素</h3><ul>
+<li><p>choose元素的作用就相当于Java中的switch语句，基本上跟JSTL中的choose的作用和用法是一样的，通常与when和otherwise搭配使用。choose使用格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;select ...&gt;</span><br><span class="line">	SQL语句1</span><br><span class="line">	&lt;choose&gt;</span><br><span class="line">		&lt;when test = &quot;条件表达式&quot;&gt;</span><br><span class="line">			SQL语句2</span><br><span class="line">		&lt;/when&gt;</span><br><span class="line">		&lt;otherwise&gt;</span><br><span class="line">			SQL语句3</span><br><span class="line">		&lt;/otherwise&gt;</span><br><span class="line">	&lt;/choose&gt;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>choose元素的使用示例代码如下：</p>
+</li>
+</ul>
+<h2 id="1-3-拼关键字"><a href="#1-3-拼关键字" class="headerlink" title="1.3 拼关键字"></a>1.3 拼关键字</h2><h3 id="1-3-1-where元素"><a href="#1-3-1-where元素" class="headerlink" title="1.3.1 where元素"></a>1.3.1 where元素</h3><ul>
+<li><p>where元素主要是用于简化查询语句中where部分的条件判断。where元素可以在<where>元素所在位置输出一个where关键字，而且还可以将后面条件多余的and或or关键字去除。</where></p>
+</li>
+<li><p>where使用格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;select ...&gt;</span><br><span class="line">	select 字段 from 表</span><br><span class="line">	&lt;where&gt;</span><br><span class="line">		动态追加条件</span><br><span class="line">	&lt;/where&gt;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>where元素的使用示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id = &quot;findByDeptAndSalary&quot; parameterType = &quot;com.sylas.unit02.entity.Condition&quot;	</span><br><span class="line">		resultType = &quot;com.sylas.unit02.entity.Emp&quot;&gt;</span><br><span class="line">	SELECT * FROM T_EMP</span><br><span class="line">	&lt;where&gt;</span><br><span class="line">		&lt;if test = &quot;deptno != null&quot;&gt;</span><br><span class="line">			and deptno = #&#123;deptno&#125;			</span><br><span class="line">		&lt;/if&gt;</span><br><span class="line">		&lt;if test = &quot;salary != null&quot;&gt;</span><br><span class="line">			and sal &gt; #&#123;salary&#125;</span><br><span class="line">		&lt;/if&gt;</span><br><span class="line">	&lt;/where&gt;	</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="1-3-2-set元素"><a href="#1-3-2-set元素" class="headerlink" title="1.3.2 set元素"></a>1.3.2 set元素</h3><ul>
+<li><p>set元素主要是用在更新操作的时候，它的主要功能和where元素相似，主要是在<set>元素所在位置输出一个set关键字，而且还可以去除内容结尾中无关的逗号。有了set元素我们就可以动态的更新那些修改了的字段。</set></p>
+</li>
+<li><p>set使用格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;update&gt;</span><br><span class="line">	UPDATE 表名</span><br><span class="line">	&lt;set&gt;</span><br><span class="line">		动态追加更新字段</span><br><span class="line">	&lt;/set&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>set元素的使用示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;update id=&quot;update&quot; parameterType = &quot;com.sylas.unit02.entity.Condition&quot;&gt;</span><br><span class="line">	UPDATE T_EMP</span><br><span class="line">	&lt;set&gt;</span><br><span class="line">		&lt;if test=&quot;ename != null&quot;&gt;</span><br><span class="line">			ename = #&#123;ename&#125;,</span><br><span class="line">		&lt;/if&gt;</span><br><span class="line">		&lt;if test = &quot;job != null&quot;&gt;</span><br><span class="line">			job = #&#123;job&#125;,</span><br><span class="line">		&lt;/if&gt;</span><br><span class="line">	&lt;/set&gt;</span><br><span class="line">	WHERE EMPNO = #&#123;empno&#125;</span><br><span class="line">&lt;/update&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="1-3-3-trim元素"><a href="#1-3-3-trim元素" class="headerlink" title="1.3.3 trim元素"></a>1.3.3 trim元素</h3><ul>
+<li><p>trim元素的主要功能如下：</p>
+<ul>
+<li>可以在自己包含的内容前加上某些前缀，也可以在其后加上某些后缀，与之对应的属性是prefix和suffix；</li>
+<li>可以把包含内容的首部某些内容过滤，即忽略，也可以把尾部的某些内容过滤，对应的属性是prefixOverrides和suffixOverrides；</li>
+<li>正因为trim有上述功能，所以我们也可以非常简单的利用trim来代替where和set元素的功能</li>
+</ul>
+</li>
+<li><p>trim代替where</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id = &quot;findByDeptAndSalary2&quot; parameterType = &quot;com.sylas.unit02.entity.Condition&quot;	</span><br><span class="line">		resultType = &quot;com.sylas.unit02.entity.Emp&quot;&gt;</span><br><span class="line">	SELECT * FROM T_EMP</span><br><span class="line">	&lt;trim prefix = &quot;where&quot; prefixOverrides = &quot;and&quot;&gt;</span><br><span class="line">		&lt;if test=&quot;deptno != null&quot;&gt;</span><br><span class="line">			and deptno = #&#123;deptno&#125;</span><br><span class="line">		&lt;/if&gt;</span><br><span class="line">		&lt;if test=&quot;salary != null&quot;&gt;</span><br><span class="line">			and sal = #&#123;salary&#125;</span><br><span class="line">		&lt;/if&gt;</span><br><span class="line">	&lt;/trim&gt;	</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>trim代替set</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;update id=&quot;update2&quot; parameterType = &quot;com.sylas.unit02.entity.Emp&quot;&gt;</span><br><span class="line">		UPDATE T_EMP</span><br><span class="line">	&lt;trim prefix = &quot;SET&quot; suffixOverrides = &quot;,&quot;&gt;</span><br><span class="line">		&lt;if test=&quot;ename != null&quot;&gt;</span><br><span class="line">			ename = #&#123;ename&#125;,</span><br><span class="line">		&lt;/if&gt;</span><br><span class="line">		&lt;if test = &quot;job != null&quot;&gt;</span><br><span class="line">			job = #&#123;job&#125;,</span><br><span class="line">		&lt;/if&gt;</span><br><span class="line">	&lt;/trim&gt;</span><br><span class="line">	WHERE EMPNO = #&#123;empno&#125;</span><br><span class="line">&lt;/update&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="1-4-进行循环"><a href="#1-4-进行循环" class="headerlink" title="1.4 进行循环"></a>1.4 进行循环</h2><h3 id="1-4-1-foreach元素"><a href="#1-4-1-foreach元素" class="headerlink" title="1.4.1 foreach元素"></a>1.4.1 foreach元素</h3><ul>
+<li><p>foreach元素实现了循环逻辑，可以进行一个集合的迭代，主要用在构建in条件中。foreach使用示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;select ..&gt;</span><br><span class="line">	select 字段 from表 where 字段 in</span><br><span class="line">	&lt;foreach collection = &quot;集合&quot; item = &quot;迭代变量&quot; </span><br><span class="line">		open = &quot;(&quot; separator = &quot;,&quot; close = &quot;)&quot;&gt;</span><br><span class="line">		#&#123;迭代变量&#125;</span><br><span class="line">	&lt;/foreach&gt;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>foreach元素非常强大，它允许指定一个集合，声明集合项和索引变量，这些变量可以用在元素体内。它也允许指定开发和关闭的字符串，在迭代之间放置分隔符。</p>
+</li>
+<li><p>foreach元素的使用示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;findByIds&quot; parameterType = &quot;com.sylas.unit02.entity.Condition&quot;</span><br><span class="line">	resultType = &quot;com.sylas.unit02.entity.Emp&quot;&gt;</span><br><span class="line">	SELECT * FROM T_EMP WHERE EMPno IN</span><br><span class="line">	&lt;foreach collection=&quot;empnos&quot; open = &quot;(&quot; close = &quot;)&quot; separator = &quot;,&quot; item = &quot;id&quot;&gt;</span><br><span class="line">		#&#123;id&#125;</span><br><span class="line">	&lt;/foreach&gt;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void testFindByIds() &#123;</span><br><span class="line">	ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;applicationContext_unit02.xml&quot;);</span><br><span class="line">	EmpDAO dao = ac.getBean(EmpDAO.class);</span><br><span class="line">	List&lt;Integer&gt; ids = new ArrayList&lt;Integer&gt;();</span><br><span class="line">	ids.add(3);</span><br><span class="line">	ids.add(7);</span><br><span class="line">	ids.add(8);</span><br><span class="line">	Condition cond = new Condition();</span><br><span class="line">	cond.setEmpnos(ids);</span><br><span class="line">	List&lt;Emp&gt; list = dao.findByIds(cond);</span><br><span class="line">	for(Emp e : list) &#123;</span><br><span class="line">		System.out.println(e.getEmpno() + &quot;;&quot; + e.getEname() + &quot;;&quot; + e.getJob());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/19/MyBatis动态SQL/" data-id="cjx49zj0c0000mcugytbdzzif" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/19/MyBatis动态SQL/" data-id="cjxdacp0j0005m8ugip3ezz4j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
@@ -115,6 +179,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2019/06/20/Spring与Ajax/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spring与Ajax
+        
+      </div>
+    </a>
   
   
     <a href="/2019/06/17/CPU过高时检查方法/" id="article-nav-older" class="article-nav-link-wrap">
@@ -138,7 +211,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webService/">webService</a></li></ul>
     </div>
   </div>
 
@@ -148,7 +221,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/SSM/" style="font-size: 20px;">SSM</a>
+      <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/SSM/" style="font-size: 20px;">SSM</a> <a href="/tags/webService/" style="font-size: 10px;">webService</a>
     </div>
   </div>
 
@@ -170,23 +243,23 @@
       <ul>
         
           <li>
+            <a href="/2019/06/26/CXF实现webService服务/">CXF实现webService服务</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/26/Linux基本命令/">Linux基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/20/Spring与Ajax/">Spring与Ajax</a>
+          </li>
+        
+          <li>
             <a href="/2019/06/19/MyBatis动态SQL/">MyBatis动态SQL</a>
           </li>
         
           <li>
             <a href="/2019/06/17/CPU过高时检查方法/">CPU过高时检查方法</a>
-          </li>
-        
-          <li>
-            <a href="/2019/06/04/Spring-MyBatis整合/">Spring+MyBatis整合</a>
-          </li>
-        
-          <li>
-            <a href="/2019/06/03/MyBatis/">MyBatis</a>
-          </li>
-        
-          <li>
-            <a href="/2019/06/01/Spring注解/">Spring注解</a>
           </li>
         
       </ul>
