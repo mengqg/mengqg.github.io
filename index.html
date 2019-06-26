@@ -101,12 +101,12 @@ https://blog.csdn.net/hu_shengyang/article/details/38384839</code></pre><h2 id="
 <p>右键 run as 选择java application发布服务；然后在浏览器输入地址：<a href="http://localhost:8080/helloWorld?wsdl" target="_blank" rel="noopener">http://localhost:8080/helloWorld?wsdl</a><br>如果出现详细内容，如下图:<br><img src="/2019/06/26/CXF实现webService服务/wsdl%E9%A1%B5%E9%9D%A2.png" alt="BP"><br>说明webService服务发布成功。</p>
 <h3 id="5、客户端访问服务"><a href="#5、客户端访问服务" class="headerlink" title="5、客户端访问服务"></a>5、客户端访问服务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.webService.client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.cxf.jaxws.JaxWsProxyFactoryBean;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.webService.entity.User;</span><br><span class="line"><span class="keyword">import</span> com.webService.server.HelloWorld;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldClient</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 首先右键run as运行com.webService.server.WebServiceApp类，然后再运行这段客户端代码</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		JaxWsProxyFactoryBean jwpfb = <span class="keyword">new</span> JaxWsProxyFactoryBean();</span><br><span class="line">		jwpfb.setServiceClass(HelloWorld.class);</span><br><span class="line">		jwpfb.setAddress(<span class="string">"http://localhost:8080/helloWorld"</span>);</span><br><span class="line">		HelloWorld hw = (HelloWorld) jwpfb.create();</span><br><span class="line">		User user = <span class="keyword">new</span> User();</span><br><span class="line">		user.setName(<span class="string">"马克思"</span>);</span><br><span class="line">		user.setDescription(<span class="string">"怀念马克思"</span>);</span><br><span class="line">		System.out.println(hw.sayHiToUser(user));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>右键 run as 选择java application，控制台打印如图：</p>
+<p>右键 run as 选择java application，控制台打印如图：<br><img src="/2019/06/26/CXF实现webService服务/%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1.png" alt="BP"><br>OK，客户端访问也成功了。</p>
 <h3 id="6、附："><a href="#6、附：" class="headerlink" title="6、附："></a>6、附：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.webService.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"serial"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String id;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> String age;</span><br><span class="line">	<span class="keyword">private</span> String description;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(String id)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.id = id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> age;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(String age)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> description;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDescription</span><span class="params">(String description)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.description = description;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/26/CXF实现webService服务/" data-id="cjxdb3t9q0009c8ugdrdp4se5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/26/CXF实现webService服务/" data-id="cjxdbf4n9000374uggkqwj4a5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webService/">webService</a></li></ul>
@@ -154,7 +154,7 @@ https://blog.csdn.net/hu_shengyang/article/details/38384839</code></pre><h2 id="
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/26/Linux基本命令/" data-id="cjxdb3t960001c8ugcfn198tw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/26/Linux基本命令/" data-id="cjxdbf4mu000074ugi5xp3snn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -196,7 +196,7 @@ https://blog.csdn.net/hu_shengyang/article/details/38384839</code></pre><h2 id="
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/20/Spring与Ajax/" data-id="cjxdb3t9g0004c8ugnz337au1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/20/Spring与Ajax/" data-id="cjxdbf4ne000574ugwaa71eug" class="article-share-link">Share</a>
       
       
     </footer>
@@ -306,7 +306,7 @@ https://blog.csdn.net/hu_shengyang/article/details/38384839</code></pre><h2 id="
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/19/MyBatis动态SQL/" data-id="cjxdb3t9e0003c8ugni8z1aan" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/19/MyBatis动态SQL/" data-id="cjxdbf4nc000474ugha1iv16c" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
@@ -345,7 +345,7 @@ https://blog.csdn.net/hu_shengyang/article/details/38384839</code></pre><h2 id="
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/17/CPU过高时检查方法/" data-id="cjxdb3t8y0000c8ugn1sgun84" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/17/CPU过高时检查方法/" data-id="cjxdbf4n4000174ugm76si2zw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -526,7 +526,7 @@ private SqlSessionTemplate template;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/04/Spring-MyBatis整合/" data-id="cjxdb3ta4000ic8ugyjy10hid" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/04/Spring-MyBatis整合/" data-id="cjxdbf4nz000i74ugov8mxbf2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
@@ -763,7 +763,7 @@ public void testFindPage() throws IOException {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/03/MyBatis/" data-id="cjxdb3ta2000hc8ugncf70glv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/03/MyBatis/" data-id="cjxdbf4nx000h74ugwtzlago5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
@@ -870,7 +870,7 @@ public class HelloController{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/01/Spring注解/" data-id="cjxdb3t9i0005c8ugnq5av40b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/01/Spring注解/" data-id="cjxdbf4nl000974ug90w0ww86" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSM/">SSM</a></li></ul>
@@ -921,7 +921,7 @@ public class HelloController{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/01/hello-world/" data-id="cjxdb3t9n0008c8ugh2lv7lr1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/01/hello-world/" data-id="cjxdbf4nj000874ug8a67vu7y" class="article-share-link">Share</a>
       
       
     </footer>
