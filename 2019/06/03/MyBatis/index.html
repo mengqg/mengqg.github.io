@@ -1,18 +1,100 @@
 <!DOCTYPE html>
-<html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
-    <meta charset="utf-8">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
 
-    
 
-    
-    <title>MyBatis | Sylas</title>
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-        <meta name="keywords" content="SSM">
-    
-    <meta name="description" content="一、MyBatis1、简介1.MyBatis最早源自Apache基金会的一个开源项目iBatis,2010年这个项目由Apache software foundation迁移到了google code,并且改名为MyBatis. 2.MyBatis是支持普通SQL查询,存储过程和高级映射的优秀持久层框架. 3.MyBatis封装了几乎所有的JDBC代码和参数的手工设置以及结果集的检索; 4.MyB">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="一、MyBatis1、简介1.MyBatis最早源自Apache基金会的一个开源项目iBatis,2010年这个项目由Apache software foundation迁移到了google code,并且改名为MyBatis. 2.MyBatis是支持普通SQL查询,存储过程和高级映射的优秀持久层框架. 3.MyBatis封装了几乎所有的JDBC代码和参数的手工设置以及结果集的检索; 4.MyB">
 <meta name="keywords" content="SSM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MyBatis">
@@ -24,158 +106,285 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MyBatis">
 <meta name="twitter:description" content="一、MyBatis1、简介1.MyBatis最早源自Apache基金会的一个开源项目iBatis,2010年这个项目由Apache software foundation迁移到了google code,并且改名为MyBatis. 2.MyBatis是支持普通SQL查询,存储过程和高级映射的优秀持久层框架. 3.MyBatis封装了几乎所有的JDBC代码和参数的手工设置以及结果集的检索; 4.MyB">
-    
 
-    
-        <link rel="alternate" href="/" title="Sylas" type="application/atom+xml">
-    
 
-    
 
-    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
-    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="/css/style.css">
 
-    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
-    
-    
-        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
-    
-    
-        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
-    
-    
-    
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/06/03/MyBatis/">
 
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MyBatis | Sylas</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
 </head>
-</html>
-<body>
-    <div id="wrap">
-        <header id="header">
-    <div id="header-outer" class="outer">
-        <div class="container">
-            <div class="container-inner">
-                <div id="header-title">
-                    <h1 class="logo-wrap">
-                        <a href="/" class="logo"></a>
-                    </h1>
-                    
-                        <h2 class="subtitle-wrap">
-                            <p class="subtitle">人生是一场难得的修行，不要轻易交白卷！</p>
-                        </h2>
-                    
-                </div>
-                <div id="header-inner" class="nav-container">
-                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
-                    <div class="nav-container-inner">
-                        <ul id="main-nav">
-                            
-                                <li class="main-nav-list-item">
-                                    <a class="main-nav-list-link" href="/">Inici</a>
-                                </li>
-                            
-                                        
-                                    
-                                <li class="main-nav-list-item">
-                                    <a class="main-nav-list-link" href="/about/index.html">Quant a</a>
-                                </li>
-                            
-                        </ul>
-                        <nav id="sub-nav">
-                            <div id="search-form-wrap">
 
-    <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Cercar">
-        <button type="submit" class="search-form-submit"></button>
-    </form>
-    <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something...">
-            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: 'Posts',
-            PAGES: 'Pages',
-            CATEGORIES: 'categories',
-            TAGS: 'etiquetes',
-            UNTITLED: '(Untitled)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
-</div>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-        <div class="container">
-            <div class="main-body container-inner">
-                <div class="main-body-inner">
-                    <section id="main">
-                        <div class="main-body-header">
-    <h1 class="header">
+  
+  
     
-    Sense categoria
-    </h1>
-</div>
+  
 
-                        <div class="main-body-content">
-                            <article id="post-MyBatis" class="article article-single article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-            <header class="article-header">
-                
-    
-        <h1 class="article-title" itemprop="name">
-        MyBatis
-        </h1>
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
     
 
-            </header>
-        
-        
-            <div class="article-meta">
-                
-    <div class="article-date">
-        <a href="/2019/06/03/MyBatis/" class="article-date">
-            <time datetime="2019-06-03T03:52:27.000Z" itemprop="datePublished">2019-06-03</time>
-        </a>
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sylas</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
     </div>
+    
+      
+        <p class="site-subtitle">人生是一场难得的修行，不要轻易交白卷！</p>
+      
+    
+    
+  </div>
 
-		
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
 
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/03/MyBatis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sylas">
+      <meta itemprop="description" content="记录所学、所知、所悟">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sylas">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MyBatis
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
                 
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/SSM/">SSM</a>
-    </div>
+              
 
-            </div>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-            <h1 id="一、MyBatis"><a href="#一、MyBatis" class="headerlink" title="一、MyBatis"></a>一、MyBatis</h1><h2 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h2><pre><code>1.MyBatis最早源自Apache基金会的一个开源项目iBatis,2010年这个项目由Apache software foundation迁移到了google code,并且改名为MyBatis.
+              <time title="Created: 2019-06-03 11:52:27" itemprop="dateCreated datePublished" datetime="2019-06-03T11:52:27+08:00">2019-06-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-06-05 15:01:36" itemprop="dateModified" datetime="2019-06-05T15:01:36+08:00">2019-06-05</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、MyBatis"><a href="#一、MyBatis" class="headerlink" title="一、MyBatis"></a>一、MyBatis</h1><h2 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h2><pre><code>1.MyBatis最早源自Apache基金会的一个开源项目iBatis,2010年这个项目由Apache software foundation迁移到了google code,并且改名为MyBatis.
 2.MyBatis是支持普通SQL查询,存储过程和高级映射的优秀持久层框架.
 3.MyBatis封装了几乎所有的JDBC代码和参数的手工设置以及结果集的检索;
 4.MyBatis使用简单的XML或注解做配置和定义映射关系,将Java的POJOs(Plain Old Java Objects)映射成数据库中的记录.</code></pre><h2 id="2、MyBatis体系结构主要由以下几个关键部分"><a href="#2、MyBatis体系结构主要由以下几个关键部分" class="headerlink" title="2、MyBatis体系结构主要由以下几个关键部分"></a>2、MyBatis体系结构主要由以下几个关键部分</h2><h3 id="1-加载配置"><a href="#1-加载配置" class="headerlink" title="1)加载配置"></a>1)加载配置</h3><pre><code>配置有两种形式，一种是XML配置文件，另一种是Java代码的注解。MyBatis将SQL的配置信息加载策划给你为一个个的MappedStatement对象(包括了传入参数映射配置、执行的SQL语句、结果的映射配置)，并将其存储在内存中</code></pre><h3 id="2-SQL解析"><a href="#2-SQL解析" class="headerlink" title="2)SQL解析"></a>2)SQL解析</h3><pre><code>当API接口层接收到调用请求时，会接收到传入SQL的ID和传入对象(可以时Map、JavaBean或者基本数据类型)，MyBatis会根据SQL的ID找到对应的MappedStatement，然后根据传入参数对象对MappedStatement进行解析，解析后可以得到最终要执行的SQL语句和参数。</code></pre><h3 id="3-SQL执行"><a href="#3-SQL执行" class="headerlink" title="3)SQL执行"></a>3)SQL执行</h3><pre><code>将最终得到的SQL和参数拿到数据库进行执行，得到操作数据库的结果。</code></pre><h3 id="4-结果映射"><a href="#4-结果映射" class="headerlink" title="4)结果映射"></a>4)结果映射</h3><pre><code>将操作数据库的结果按照映射的配置进行转换，可以转换成HashMap、JavaBean或者基本数据类型，并将最终结果返回。</code></pre><h2 id="3、MyBatis的配置文件"><a href="#3、MyBatis的配置文件" class="headerlink" title="3、MyBatis的配置文件"></a>3、MyBatis的配置文件</h2><h3 id="MyBatis框架的XML配置文件包含下面两种类型"><a href="#MyBatis框架的XML配置文件包含下面两种类型" class="headerlink" title="MyBatis框架的XML配置文件包含下面两种类型"></a>MyBatis框架的XML配置文件包含下面两种类型</h3><h4 id="1-SqlMapConfig-xml-1个"><a href="#1-SqlMapConfig-xml-1个" class="headerlink" title="1)SqlMapConfig.xml(1个)"></a>1)SqlMapConfig.xml(1个)</h4><pre><code>主配置文件，用于指定数据库连接参数和框架参数</code></pre><h4 id="2-SqlMap-xml-n个"><a href="#2-SqlMap-xml-n个" class="headerlink" title="2)SqlMap.xml(n个)"></a>2)SqlMap.xml(n个)</h4><pre><code>映射定义文件，用于定义SQL语句和映射信息
@@ -375,429 +584,373 @@ public void testFindPage() throws IOException {
     }
     sqlSession.close();
 }</code></pre>
-        </div>
-        <footer class="article-footer">
-            
-
-
-
-    <a data-url="http://yoursite.com/2019/06/03/MyBatis/" data-id="cjxe4rkil000hccugdcq9g6x6" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-        </footer>
+      
     </div>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "author": {
-            "@type": "Person",
-            "name": "Sylas"
-        },
-        "headline": "MyBatis",
-        "image": "http://yoursite.com",
-        "keywords": "SSM",
-        "genre": "",
-        "datePublished": "2019-06-03",
-        "dateCreated": "2019-06-03",
-        "dateModified": "2019-06-05",
-        "url": "http://yoursite.com/2019/06/03/MyBatis/",
-        "description": "一、MyBatis1、简介1.MyBatis最早源自Apache基金会的一个开源项目iBatis,2010年这个项目由Apache software foundation迁移到了google code,并且改名为MyBatis.
-2.MyBatis是支持普通SQL查询,存储过程和高级映射的优秀持久层框架.
-3.MyBatis封装了几乎所有的JDBC代码和参数的手工设置以及结果集的检索;
-4.MyB"
-        "wordCount": 1267
-    }
-</script>
 
-</article>
-
-    <section id="comments">
     
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
         
-    <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/SSM/" rel="tag"># SSM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/01/Spring注解/" rel="next" title="Spring注解">
+                <i class="fa fa-chevron-left"></i> Spring注解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/04/Spring-MyBatis整合/" rel="prev" title="Spring+MyBatis整合">
+                Spring+MyBatis整合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
+  </div>
 
-    
-    </section>
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
 
+      
 
-
-                        </div>
-                    </section>
-                    <aside id="sidebar">
-    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
-    <div class="sidebar-top">
-        <p>seguir:</p>
-        <ul class="social-links">
-            
-                
-                <li>
-                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
-                        <i class="icon fa fa-twitter"></i>
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
-                        <i class="icon fa fa-facebook"></i>
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a class="social-tooltip" title="google-plus" href="/" target="_blank" rel="noopener">
-                        <i class="icon fa fa-google-plus"></i>
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
-                        <i class="icon fa fa-github"></i>
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
-                        <i class="icon fa fa-weibo"></i>
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
-                        <i class="icon fa fa-rss"></i>
-                    </a>
-                </li>
-                
-            
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
         </ul>
-    </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2019/06/04/Spring-MyBatis整合/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">més nou</strong>
-        <p class="article-nav-title">
-        
-            Spring+MyBatis整合
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
-    
-    
-        <a href="/2019/06/01/Spring注解/" id="article-nav-older" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">antic</strong>
-        <p class="article-nav-title">Spring注解</p>
-        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
-        </a>
-    
-</nav>
+      
 
-    
-    <div class="widgets-container">
-        
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-                
+              <p class="site-author-name" itemprop="name">Sylas</p>
+              <div class="site-description motion-element" itemprop="description">记录所学、所知、所悟</div>
+          </div>
 
-            
-                
-    <div class="widget-wrap">
-        <h3 class="widget-title">recents</h3>
-        <div class="widget">
-            <ul id="recent-post" class>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/06/26/CXF实现webService服务/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/2019/06/26/CXF实现webService服务/wsdl%E9%A1%B5%E9%9D%A2.png)" alt="CXF实现webService服务" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/06/26/CXF实现webService服务/" class="title">CXF实现webService服务</a></p>
-                            <p class="item-date"><time datetime="2019-06-26T13:02:21.000Z" itemprop="datePublished">2019-06-26</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/06/26/Linux基本命令/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/06/26/Linux基本命令/" class="title">Linux基本命令</a></p>
-                            <p class="item-date"><time datetime="2019-06-26T07:33:37.000Z" itemprop="datePublished">2019-06-26</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/06/20/Spring与Ajax/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/06/20/Spring与Ajax/" class="title">Spring与Ajax</a></p>
-                            <p class="item-date"><time datetime="2019-06-20T09:45:36.000Z" itemprop="datePublished">2019-06-20</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/06/19/MyBatis动态SQL/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/06/19/MyBatis动态SQL/" class="title">MyBatis动态SQL</a></p>
-                            <p class="item-date"><time datetime="2019-06-19T13:34:53.000Z" itemprop="datePublished">2019-06-19</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/06/17/CPU过高时检查方法/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2019/06/17/CPU过高时检查方法/" class="title">CPU过高时检查方法</a></p>
-                            <p class="item-date"><time datetime="2019-06-17T07:08:27.000Z" itemprop="datePublished">2019-06-17</time></p>
-                        </div>
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
-
-            
-                
-
-            
-                
-    <div class="widget-wrap widget-list">
-        <h3 class="widget-title">arxius</h3>
-        <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">9</span></li></ul>
-        </div>
-    </div>
-
-
-            
-                
-    <div class="widget-wrap widget-list">
-        <h3 class="widget-title">etiquetes</h3>
-        <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM/">SSM</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webService/">webService</a><span class="tag-list-count">1</span></li></ul>
-        </div>
-    </div>
-
-
-            
-                
-    <div class="widget-wrap widget-float">
-        <h3 class="widget-title">etiqueta cloud</h3>
-        <div class="widget tagcloud">
-            <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/SSM/" style="font-size: 20px;">SSM</a> <a href="/tags/webService/" style="font-size: 10px;">webService</a>
-        </div>
-    </div>
-
-
-            
-                
-    <div class="widget-wrap widget-list">
-        <h3 class="widget-title">links</h3>
-        <div class="widget">
-            <ul>
-                
-                    <li>
-                        <a href="http://hexo.io">Hexo</a>
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
-
-
-            
-        
-    </div>
-</aside>
-
-                </div>
-            </div>
-        </div>
-        <footer id="footer">
-    <div class="container">
-        <div class="container-inner">
-            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
-            <div class="credit">
-                <h1 class="logo-wrap">
-                    <a href="/" class="logo"></a>
-                </h1>
-                <p>&copy; 2019 Sylas</p>
-                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
-            </div>
-            <div class="footer-plugins">
+          
+            <nav class="site-state motion-element">
               
-    
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
 
+              
 
-            </div>
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
         </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、MyBatis"><span class="nav-number">1.</span> <span class="nav-text">一、MyBatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、简介"><span class="nav-number">1.1.</span> <span class="nav-text">1、简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、MyBatis体系结构主要由以下几个关键部分"><span class="nav-number">1.2.</span> <span class="nav-text">2、MyBatis体系结构主要由以下几个关键部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-加载配置"><span class="nav-number">1.2.1.</span> <span class="nav-text">1)加载配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SQL解析"><span class="nav-number">1.2.2.</span> <span class="nav-text">2)SQL解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-SQL执行"><span class="nav-number">1.2.3.</span> <span class="nav-text">3)SQL执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-结果映射"><span class="nav-number">1.2.4.</span> <span class="nav-text">4)结果映射</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、MyBatis的配置文件"><span class="nav-number">1.3.</span> <span class="nav-text">3、MyBatis的配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis框架的XML配置文件包含下面两种类型"><span class="nav-number">1.3.1.</span> <span class="nav-text">MyBatis框架的XML配置文件包含下面两种类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-SqlMapConfig-xml-1个"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">1)SqlMapConfig.xml(1个)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-SqlMap-xml-n个"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">2)SqlMap.xml(n个)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Dept-xml"><span class="nav-number">1.3.1.2.1.</span> <span class="nav-text">Dept.xml</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、框架API简介"><span class="nav-number">1.4.</span> <span class="nav-text">4、框架API简介</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、MyBatis基本应用"><span class="nav-number">2.</span> <span class="nav-text">二、MyBatis基本应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、搭建MyBatis技术环境"><span class="nav-number">2.1.</span> <span class="nav-text">1、搭建MyBatis技术环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、获取SqlSession对象"><span class="nav-number">2.2.</span> <span class="nav-text">2、获取SqlSession对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、利用SqlSession实现CRUD操作"><span class="nav-number">2.3.</span> <span class="nav-text">3、利用SqlSession实现CRUD操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-新增"><span class="nav-number">2.3.1.</span> <span class="nav-text">1)新增</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-更新"><span class="nav-number">2.3.2.</span> <span class="nav-text">2)更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-删除"><span class="nav-number">2.3.3.</span> <span class="nav-text">3)删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-查询单条"><span class="nav-number">2.3.4.</span> <span class="nav-text">4)查询单条</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-查询多行数据"><span class="nav-number">2.3.5.</span> <span class="nav-text">5)查询多行数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-返回Map类型查询结果"><span class="nav-number">2.3.6.</span> <span class="nav-text">6)返回Map类型查询结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-使用Mapper映射器"><span class="nav-number">2.3.7.</span> <span class="nav-text">7)使用Mapper映射器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-Mapper映射定义"><span class="nav-number">2.3.8.</span> <span class="nav-text">8)Mapper映射定义</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#在-SqlMap-xm定义-lt-select-gt-操作时-如果查询结果字段名和Java-PoJO属性不一致时-需要使用元素显式指定映射关系。例如"><span class="nav-number">2.3.8.0.0.1.</span> <span class="nav-text">在 SqlMap. xm定义&lt; select&gt;操作时,如果查询结果字段名和Java PoJO属性不一致时,需要使用元素显式指定映射关系。例如</span></a></li></ol></li></ol></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#4、利用MyBatis实现分页查询"><span class="nav-number">2.4.</span> <span class="nav-text">4、利用MyBatis实现分页查询</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
     </div>
-</footer>
+  </aside>
+  
+
 
         
-    
-    <script>
-    var disqus_shortname = 'hexo-theme-hueman';
-    
-    
-    var disqus_url = 'http://yoursite.com/2019/06/03/MyBatis/';
-    
-    (function() {
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-    </script>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sylas</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.2</div>
 
 
 
 
-    
-        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
-    
-    
-        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
-    
-    
+        
 
 
 
-<!-- Custom Scripts -->
-<script src="/js/main.js"></script>
 
-    </div>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>
