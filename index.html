@@ -289,6 +289,158 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/04/SpringAOP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sylas">
+      <meta itemprop="description" content="记录所学、所知、所悟">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sylas">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/04/SpringAOP/" class="post-title-link" itemprop="url">SpringAOP</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-04 10:18:52 / Geändert am: 10:31:21" itemprop="dateCreated datePublished" datetime="2019-07-04T10:18:52+08:00">2019-07-04</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一、基于配置的AOP"><a href="#一、基于配置的AOP" class="headerlink" title="一、基于配置的AOP"></a>一、基于配置的AOP</h2><h3 id="1、前置通知、环绕通知、异常通知"><a href="#1、前置通知、环绕通知、异常通知" class="headerlink" title="1、前置通知、环绕通知、异常通知"></a>1、前置通知、环绕通知、异常通知</h3><h4 id="①-创建Controller"><a href="#①-创建Controller" class="headerlink" title="① 创建Controller"></a>① 创建Controller</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sylas.unit05.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/emp"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmpController</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询员工</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/findEmp.do"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">find</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//模拟查询员工数据</span></span><br><span class="line">        System.out.println(<span class="string">"查询员工数据,发送到列表页面."</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//制造一个异常,便于测试异常通知</span></span><br><span class="line">        Integer.valueOf(<span class="string">"abc"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"emp/emp list.jsp"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="②-创建方面组件"><a href="#②-创建方面组件" class="headerlink" title="② 创建方面组件"></a>② 创建方面组件</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sylas.unit05.aspect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 用于记录日志的方面组件，演示Spring AOP的各种通知类型。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperateLogger</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 前置通知、后置通知、最终通知使用的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//记录日志</span></span><br><span class="line">        System.out.println(<span class="string">"--&gt;记录用户操作信息"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 环绕通知使用的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">log2</span><span class="params">(ProceedingJoinPoint p)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        <span class="comment">//目标组件的类名</span></span><br><span class="line">        String className = p.getTarget().getClass().getName();</span><br><span class="line">        <span class="comment">//调用的方法名</span></span><br><span class="line">        String method = p.getSignature().getName();</span><br><span class="line">        <span class="comment">//当前系统时间</span></span><br><span class="line">        String date = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>).format(<span class="keyword">new</span> Date());</span><br><span class="line">        <span class="comment">//拼日志信息</span></span><br><span class="line">        String msg = <span class="string">"--&gt;用户在"</span> + date + <span class="string">",执行了"</span> + className + <span class="string">"."</span> + method + <span class="string">"()"</span>;</span><br><span class="line">        <span class="comment">//记录日志</span></span><br><span class="line">        System.out.println(msg);</span><br><span class="line">        <span class="comment">//执行目标组件的方法</span></span><br><span class="line">        Object obj = p.proceed();</span><br><span class="line">        <span class="comment">//在调用目标组件业务方法后也可以做一些业务逻辑处理</span></span><br><span class="line">        System.out.println(<span class="string">"--&gt;调用目标组件业务方法后..."</span>);</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 异常通知使用的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log3</span><span class="params">(Exception e)</span></span>&#123;</span><br><span class="line">        StackTraceElement[] elems = e.getStackTrace();</span><br><span class="line">        <span class="comment">//将异常信息记录</span></span><br><span class="line">        System.out.println(<span class="string">"--&gt;"</span> + elems[<span class="number">0</span>].toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="③-声明方面组件并将方面组件作用到目标组件上"><a href="#③-声明方面组件并将方面组件作用到目标组件上" class="headerlink" title="③ 声明方面组件并将方面组件作用到目标组件上"></a>③ 声明方面组件并将方面组件作用到目标组件上</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:jdbc</span>=<span class="string">"http://www.springframework.org/schema/jdbc"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:jee</span>=<span class="string">"http://www.springframework.org/schema/jee"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:tx</span>=<span class="string">"http://www.springframework.org/schema/tx"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:mvc</span>=<span class="string">"http://www.springframework.org/schema/mvc"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:util</span>=<span class="string">"http://www.springframework.org/schema/util"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:jpa</span>=<span class="string">"http://www.springframework.org/schema/data/jpa"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">util:properties</span> <span class="attr">id</span> = <span class="string">"prop"</span> <span class="attr">location</span> = <span class="string">"classpath:db.properties"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span> = <span class="string">"myDataSource"</span> <span class="attr">class</span> = <span class="string">"org.apache.commons.dbcp.BasicDataSource"</span> <span class="attr">destroy-method</span> = <span class="string">"close"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span> = <span class="string">"#&#123;prop.driver&#125;"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span> = <span class="string">"#&#123;prop.url&#125;"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span> = <span class="string">"#&#123;prop.user&#125;"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span> = <span class="string">"#&#123;prop.pwd&#125;"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--配置SqlSessionFactory--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;bean id = "sqlSessionFactory" class = "org.mybatis.spring.SqlSessionFactoryBean"&gt;</span></span><br><span class="line"><span class="comment">        &lt;property name="dataSource" ref = "myDataSource"/&gt;</span></span><br><span class="line"><span class="comment">        &lt;property name="mapperLocations" value = "classpath:com/sylas/unit03/entity/*.xml"/&gt;</span></span><br><span class="line"><span class="comment">    &lt;/bean&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    &amp;lt;!&amp;ndash; 按指定包和注解标记扫描Mapper/DAO &amp;ndash;&amp;gt;</span></span><br><span class="line"><span class="comment">    &lt;bean class = "org.mybatis.spring.mapper.MapperScannerConfigurer"&gt;</span></span><br><span class="line"><span class="comment">        &lt;property name="sqlSessionFactory" ref = "sqlSessionFactory"/&gt;</span></span><br><span class="line"><span class="comment">        &lt;property name="basePackage" value = "com.sylas.unit03"/&gt;</span></span><br><span class="line"><span class="comment">        &lt;property name="annotationClass" value = "com.sylas.unit03.annotation.MyBatisRepository"/&gt;</span></span><br><span class="line"><span class="comment">    &lt;/bean&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.sylas.unit05.controller"</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 支持@RequestMapping请求和@Controller映射 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- SpringMVC的ViewResolver --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span> = <span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span> = <span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span> = <span class="string">".jsp"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 声明方面组件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span> = <span class="string">"operateLogger"</span> <span class="attr">class</span> = <span class="string">"com.sylas.unit05.aspect.OperateLogger"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 配置AOP,将声明的方面组件作用到com.sylas.controller包下所有的类的所有方法上 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 前置通知 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span> = <span class="string">"operateLogger"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">aop:before</span> <span class="attr">method</span> = <span class="string">"log1"</span> <span class="attr">pointcut</span> =<span class="string">"within(com.sylas.unit05.controller..*)"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 环绕通知 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">"operateLogger"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">aop:around</span> <span class="attr">method</span>=<span class="string">"log2"</span> <span class="attr">pointcut</span>=<span class="string">"within(com.sylas.unit05.controller..*)"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 异常通知 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">"operateLogger"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">aop:after-throwing</span> <span class="attr">method</span>=<span class="string">"log3"</span> <span class="attr">throwing</span>=<span class="string">"e"</span> <span class="attr">pointcut</span>=<span class="string">"within(com.sylas.unit05.controller..*)"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="④-测试"><a href="#④-测试" class="headerlink" title="④ 测试"></a>④ 测试</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sylas.unit05.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sylas.unit05.controller.EmpController;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestEmpController</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试查询员工</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"applicationContext.xml"</span>);</span><br><span class="line">        EmpController controller = ac.getBean(<span class="string">"empController"</span>, EmpController.class);</span><br><span class="line">        controller.find();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、基于注解的AOP"><a href="#二、基于注解的AOP" class="headerlink" title="二、基于注解的AOP"></a>二、基于注解的AOP</h2><h4 id="1、在applicationContext-xml中-去掉方面组件声明以及作用的XML配置，并开启AOP注解扫描"><a href="#1、在applicationContext-xml中-去掉方面组件声明以及作用的XML配置，并开启AOP注解扫描" class="headerlink" title="1、在applicationContext.xml中,去掉方面组件声明以及作用的XML配置，并开启AOP注解扫描"></a>1、在applicationContext.xml中,去掉方面组件声明以及作用的XML配置，并开启AOP注解扫描</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--开启AOP注解扫描--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:aspectj-autoproxy</span> <span class="attr">proxy-target-class</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2、组件类"><a href="#2、组件类" class="headerlink" title="2、组件类"></a>2、组件类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sylas.aspect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterThrowing;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Around;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Before;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 用于记录日志的方面组件，演示Spring AOP的各种通知类型。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperateLogger</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 前置通知、后置通知、最终通知使用的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Before</span>(<span class="string">"within(com.sylas.controller..*)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//记录日志</span></span><br><span class="line">        System.out.println(<span class="string">"--&gt;记录用户操作信息"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 环绕通知使用的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Around</span>(<span class="string">"within(com.sylas.controller..*)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">log2</span><span class="params">(ProceedingJoinPoint p)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        <span class="comment">//目标组件的类名</span></span><br><span class="line">        String className = p.getTarget().getClass().getName();</span><br><span class="line">        <span class="comment">//调用的方法名</span></span><br><span class="line">        String method = p.getSignature().getName();</span><br><span class="line">        <span class="comment">//当前系统时间</span></span><br><span class="line">        String date = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>).format(<span class="keyword">new</span> Date());</span><br><span class="line">        <span class="comment">//拼日志信息</span></span><br><span class="line">        String msg = <span class="string">"--&gt;用户在"</span> + date + <span class="string">",执行了"</span> + className + <span class="string">"."</span> + method + <span class="string">"()"</span>;</span><br><span class="line">        <span class="comment">//记录日志</span></span><br><span class="line">        System.out.println(msg);</span><br><span class="line">        <span class="comment">//执行目标组件的方法</span></span><br><span class="line">        Object obj = p.proceed();</span><br><span class="line">        <span class="comment">//在调用目标组件业务方法后也可以做一些业务逻辑处理</span></span><br><span class="line">        System.out.println(<span class="string">"--&gt;调用目标组件业务方法后..."</span>);</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 异常通知使用的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AfterThrowing</span>(pointcut = <span class="string">"within(com.sylas.controller..*)"</span>, throwing = <span class="string">"e"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log3</span><span class="params">(Exception e)</span></span>&#123;</span><br><span class="line">        StackTraceElement[] elems = e.getStackTrace();</span><br><span class="line">        <span class="comment">//将异常信息记录</span></span><br><span class="line">        System.out.println(<span class="string">"--&gt;"</span> + elems[<span class="number">0</span>].toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/01/Spring-IOC的原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2100,229 +2252,6 @@ public void testFindPage() throws IOException {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/01/Spring注解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sylas">
-      <meta itemprop="description" content="记录所学、所知、所悟">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sylas">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/06/01/Spring注解/" class="post-title-link" itemprop="url">Spring注解</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-06-01 16:51:27" itemprop="dateCreated datePublished" datetime="2019-06-01T16:51:27+08:00">2019-06-01</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Bearbeitet am</span>
-                
-                <time title="Geändert am: 2019-06-03 17:43:40" itemprop="dateModified" datetime="2019-06-03T17:43:40+08:00">2019-06-03</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Spring注解"><a href="#Spring注解" class="headerlink" title="Spring注解"></a>Spring注解</h1><h2 id="1、自动扫描的注解标记"><a href="#1、自动扫描的注解标记" class="headerlink" title="1、自动扫描的注解标记"></a>1、自动扫描的注解标记</h2><pre><code>@Component    通用注解
-@Name    通用注解
-@Repository    持久化层(DAO)组件注解
-@Service    业务层组件注解
-@Controller    控制层组件注解
-/* 组件扫描 */
-&lt;context:component-scan base-package = &quot;com.pansoft&quot;/&gt;</code></pre><h2 id="2、指定组件的作用域"><a href="#2、指定组件的作用域" class="headerlink" title="2、指定组件的作用域"></a>2、指定组件的作用域</h2><pre><code>@Scope(&quot;prototype&quot;)
-@Repository
-public class OracleUserDAO implements EmpDAO{
-    //.....
-}</code></pre><h2 id="3、初始化和销毁回调的控制"><a href="#3、初始化和销毁回调的控制" class="headerlink" title="3、初始化和销毁回调的控制"></a>3、初始化和销毁回调的控制</h2><pre><code>public class ExampleBean{
-    @PostConstruct
-    public void init(){
-        //....初始化回调方法
-    }
-    @PreDestroy
-    public void destroy(){
-        //....销毁回调方法
-    }
-}</code></pre><h2 id="4、指定依赖注入关系"><a href="#4、指定依赖注入关系" class="headerlink" title="4、指定依赖注入关系"></a>4、指定依赖注入关系</h2><h3 id="①-Resource注解"><a href="#①-Resource注解" class="headerlink" title="① @Resource注解"></a>① @Resource注解</h3><pre><code>//@Resource
-private UserDAO userDAO;
-@Resource
-public void setUserDAO(UserDAO dao){
-    this.userDAO = dao;
-}
-//注：当遇到多个匹配Bean时注入会发生错误，可以显式指定名称：@Resource(name = &quot;empDAO1&quot;)</code></pre><h3 id="②-Autowired、-Qualifier注解"><a href="#②-Autowired、-Qualifier注解" class="headerlink" title="② @Autowired、@Qualifier注解"></a>② @Autowired、@Qualifier注解</h3><pre><code>//@Autowired
-private UserDAO userDAO;
-@Autowired
-public void setUserDAO(UserDAO dao){
-    this.userDAO = dao;
-}
-//注：当遇到多个匹配Bean时注入会发生错误，可以使用以下方式指定名称
-//@Autowired
-//Qualifier(&quot;mySqlUserDAO&quot;)
-private UserDAO userDAO;
-@Autowwired
-public void setUserDAO(@Qualifier(&quot;mysqlUserDAO&quot;) userDAO dao){
-    this.userDAO = dao;
-}</code></pre><h3 id="③-Inject、-Named注解（Spring3-0后添加的-需添加JSR-330的jar包，使用方法同-Autowired、-Qualifier注解）"><a href="#③-Inject、-Named注解（Spring3-0后添加的-需添加JSR-330的jar包，使用方法同-Autowired、-Qualifier注解）" class="headerlink" title="③ @Inject、@Named注解（Spring3.0后添加的,需添加JSR-330的jar包，使用方法同@Autowired、@Qualifier注解）"></a>③ @Inject、@Named注解（Spring3.0后添加的,需添加JSR-330的jar包，使用方法同@Autowired、@Qualifier注解）</h3><h2 id="5、注入Spring表达式值"><a href="#5、注入Spring表达式值" class="headerlink" title="5、注入Spring表达式值"></a>5、注入Spring表达式值</h2><pre><code>@Value注解可以注入Spring表达式的值，使用方式首先在XML配置中指定要注入的properties文件
-&lt;util:properties id = &quot;jdbcProps&quot; location = &quot;classpath:db:properties&quot;/&gt;
-然后在setter方法前使用@value注解
-public class JDBCDataSource{
-    @Value(&quot;#{jdbcProps.url}&quot;)
-    private String url;
-    @Value(&quot;#{jdbcProps.driver}&quot;)
-    public void setUrl(String driver){
-        try{
-            Class.forName(driver);
-        }catch{
-
-        }
-    }
-}</code></pre><h2 id="6、-RequestMapping可以用在类定义和方法定义上，它标明这个类或方法与哪一个客户请求对应。"><a href="#6、-RequestMapping可以用在类定义和方法定义上，它标明这个类或方法与哪一个客户请求对应。" class="headerlink" title="6、@RequestMapping可以用在类定义和方法定义上，它标明这个类或方法与哪一个客户请求对应。"></a>6、@RequestMapping可以用在类定义和方法定义上，它标明这个类或方法与哪一个客户请求对应。</h2><pre><code>@RequestMapping(&quot;/day01&quot;)
-public class HelloController{
-    @RequestMapping(&quot;/hello.form&quot;)
-    public String execute() throw Exception{
-        return &quot;hello&quot;;
-    }
-}
-注：开启@RequestMapping注解时，需要在spring-mvc的Xml配置文件进行配置，配置代码如下：
-&lt;mvc:annotation-driven/&gt;</code></pre><h2 id="7、-Controller：声明Controller组件，这样可以使得Controller更加灵活，可以不用实现Controller接口，请求处理的方法也可以灵活定义。"><a href="#7、-Controller：声明Controller组件，这样可以使得Controller更加灵活，可以不用实现Controller接口，请求处理的方法也可以灵活定义。" class="headerlink" title="7、@Controller：声明Controller组件，这样可以使得Controller更加灵活，可以不用实现Controller接口，请求处理的方法也可以灵活定义。"></a>7、@Controller：声明Controller组件，这样可以使得Controller更加灵活，可以不用实现Controller接口，请求处理的方法也可以灵活定义。</h2><pre><code>@Controller
-@RequestMapping(&quot;/day01&quot;)
-public class HelloController{
-    @RequestMapping(&quot;/hello.form&quot;)
-    public String execute() throw Exception{
-        return &quot;hello&quot;;
-    }
-}
-注解扫描:
-&lt;context:component-scan base-package=&quot;com.pansoft.controller&quot;/&gt;</code></pre>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2369,7 +2298,7 @@ public class HelloController{
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
