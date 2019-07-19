@@ -334,12 +334,24 @@
                 
               
 
-              <time title="Erstellt: 2019-07-18 21:07:15 / Geändert am: 21:32:35" itemprop="dateCreated datePublished" datetime="2019-07-18T21:07:15+08:00">2019-07-18</time>
+              <time title="Erstellt: 2019-07-18 21:07:15" itemprop="dateCreated datePublished" datetime="2019-07-18T21:07:15+08:00">2019-07-18</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Bearbeitet am</span>
+                
+                <time title="Geändert am: 2019-07-19 17:53:50" itemprop="dateModified" datetime="2019-07-19T17:53:50+08:00">2019-07-19</time>
               
             
           </span>
@@ -386,7 +398,11 @@
 <h4 id="4-编写Controller类"><a href="#4-编写Controller类" class="headerlink" title="4) 编写Controller类"></a>4) 编写Controller类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sylas.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuickController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"quick"</span>)</span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">quick</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"hello SpringBoot"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>重新执行引导类的main方法，待启动完成在浏览器中输入：<a href="http://localhost:8080/quick" target="_blank" rel="noopener">http://localhost:8080/quick</a><br><img src="/2019/07/18/SpringBoot/%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F02.png" alt="BP"><br>出现则完成了一个简单的SpringBoot案例搭建</p>
-<h2 id="二、SpringBoot原理分析"><a href="#二、SpringBoot原理分析" class="headerlink" title="二、SpringBoot原理分析"></a>二、SpringBoot原理分析</h2><h2 id="三、SpringBoot配置文件"><a href="#三、SpringBoot配置文件" class="headerlink" title="三、SpringBoot配置文件"></a>三、SpringBoot配置文件</h2><h2 id="四、SpringBoot集成"><a href="#四、SpringBoot集成" class="headerlink" title="四、SpringBoot集成"></a>四、SpringBoot集成</h2>
+<h3 id="2、SpringBoot工程的热部署"><a href="#2、SpringBoot工程的热部署" class="headerlink" title="2、SpringBoot工程的热部署"></a>2、SpringBoot工程的热部署</h3><h4 id="1-pom-xml中配置："><a href="#1-pom-xml中配置：" class="headerlink" title="1) pom.xml中配置："></a>1) pom.xml中配置：</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- SpringBoot热部署配置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-IDEA进行SpringBoot热部署失败原因"><a href="#2-IDEA进行SpringBoot热部署失败原因" class="headerlink" title="2) IDEA进行SpringBoot热部署失败原因"></a>2) IDEA进行SpringBoot热部署失败原因</h4><h5 id="①-按图步骤"><a href="#①-按图步骤" class="headerlink" title="① 按图步骤"></a>① 按图步骤</h5><p><img src="/2019/07/18/SpringBoot/%E7%83%AD%E9%83%A8%E7%BD%B201.png" alt="BP"><br><img src="/2019/07/18/SpringBoot/%E7%83%AD%E9%83%A8%E7%BD%B202.png" alt="BP"></p>
+<h5 id="②-快捷键：Ctrl-Shift-Alt"><a href="#②-快捷键：Ctrl-Shift-Alt" class="headerlink" title="② 快捷键：Ctrl+Shift+Alt+/"></a>② 快捷键：Ctrl+Shift+Alt+/</h5><p><img src="/2019/07/18/SpringBoot/%E7%83%AD%E9%83%A8%E7%BD%B203.png" alt="BP"><br><img src="/2019/07/18/SpringBoot/%E7%83%AD%E9%83%A8%E7%BD%B204.png" alt="BP"></p>
+<h3 id="3、IDEA快速创建SpringBoot工程"><a href="#3、IDEA快速创建SpringBoot工程" class="headerlink" title="3、IDEA快速创建SpringBoot工程"></a>3、IDEA快速创建SpringBoot工程</h3><h2 id="二、SpringBoot原理分析"><a href="#二、SpringBoot原理分析" class="headerlink" title="二、SpringBoot原理分析"></a>二、SpringBoot原理分析</h2><h2 id="三、SpringBoot配置文件"><a href="#三、SpringBoot配置文件" class="headerlink" title="三、SpringBoot配置文件"></a>三、SpringBoot配置文件</h2><h2 id="四、SpringBoot集成"><a href="#四、SpringBoot集成" class="headerlink" title="四、SpringBoot集成"></a>四、SpringBoot集成</h2>
           
         
       
