@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Sylas">
 <meta property="og:description" content="Spring注解1、自动扫描的注解标记@Component    通用注解 @Name    通用注解 @Repository    持久化层(DAO)组件注解 @Service    业务层组件注解 @Controller    控制层组件注解 /* 组件扫描 */ &amp;lt;context:component-scan base-package = &amp;quot;com.pansoft&amp;quot;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-18T13:00:40.415Z">
+<meta property="og:updated_time" content="2019-08-03T10:26:51.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring注解">
 <meta name="twitter:description" content="Spring注解1、自动扫描的注解标记@Component    通用注解 @Name    通用注解 @Repository    持久化层(DAO)组件注解 @Service    业务层组件注解 @Controller    控制层组件注解 /* 组件扫描 */ &amp;lt;context:component-scan base-package = &amp;quot;com.pansoft&amp;quot;">
@@ -195,7 +195,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Navigationsleiste an/ausschalten">
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -222,7 +222,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
 
   </li>
         
@@ -238,7 +238,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
 
   </li>
 
@@ -326,14 +326,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Erstellt: 2019-06-01 16:51:27" itemprop="dateCreated datePublished" datetime="2019-06-01T16:51:27+08:00">2019-06-01</time>
+              <time title="Created: 2019-06-01 16:51:27" itemprop="dateCreated datePublished" datetime="2019-06-01T16:51:27+08:00">2019-06-01</time>
             
 
             
@@ -348,9 +348,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Bearbeitet am</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Geändert am: 2019-07-18 21:00:40" itemprop="dateModified" datetime="2019-07-18T21:00:40+08:00">2019-07-18</time>
+                <time title="Modified: 2019-08-03 18:26:51" itemprop="dateModified" datetime="2019-08-03T18:26:51+08:00">2019-08-03</time>
               
             
           </span>
@@ -454,6 +454,8 @@ public class HelloController{
 }
 注解扫描:
 &lt;context:component-scan base-package=&quot;com.pansoft.controller&quot;/&gt;</code></pre><h2 id="8、-SpringBootApplication：声明该类为SpringBoot的引导类"><a href="#8、-SpringBootApplication：声明该类为SpringBoot的引导类" class="headerlink" title="8、@SpringBootApplication：声明该类为SpringBoot的引导类"></a>8、@SpringBootApplication：声明该类为SpringBoot的引导类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sylas;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 3、引入包(见pom.xml)编写SpringBoot的引导类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//注解：声明该类是一个SpringBoot的引导类</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpringBootApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(MySpringBootApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="9、-ConfigurationProerties映射"><a href="#9、-ConfigurationProerties映射" class="headerlink" title="9、@ConfigurationProerties映射"></a>9、@ConfigurationProerties映射</h2><pre><code>通过注解@ConfigurationProperties(prefix=&quot;配置文件中的key的前缀&quot;)可以将配置文件中的配置自动与实体进行映射【详见StringBoot/三/1】</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"person"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Quick3Controller</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String addr;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/quick3"</span>)</span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">quick2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//获取配置文件的信息</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"name:"</span> + name + <span class="string">", addr ="</span> + addr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getAddr</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> addr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddr</span><span class="params">(String addr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.addr = addr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -550,10 +552,10 @@ public class HelloController{
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -574,7 +576,7 @@ public class HelloController{
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">16</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -601,7 +603,7 @@ public class HelloController{
                       
                     
                     <span class="site-state-item-count">6</span>
-                    <span class="site-state-item-name">schlagwörter</span>
+                    <span class="site-state-item-name">tags</span>
                   
                 </div>
               
@@ -638,7 +640,7 @@ public class HelloController{
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring注解"><span class="nav-number">1.</span> <span class="nav-text">Spring注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、自动扫描的注解标记"><span class="nav-number">1.1.</span> <span class="nav-text">1、自动扫描的注解标记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、指定组件的作用域"><span class="nav-number">1.2.</span> <span class="nav-text">2、指定组件的作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、初始化和销毁回调的控制"><span class="nav-number">1.3.</span> <span class="nav-text">3、初始化和销毁回调的控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、指定依赖注入关系"><span class="nav-number">1.4.</span> <span class="nav-text">4、指定依赖注入关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#①-Resource注解"><span class="nav-number">1.4.1.</span> <span class="nav-text">① @Resource注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#②-Autowired、-Qualifier注解"><span class="nav-number">1.4.2.</span> <span class="nav-text">② @Autowired、@Qualifier注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#③-Inject、-Named注解（Spring3-0后添加的-需添加JSR-330的jar包，使用方法同-Autowired、-Qualifier注解）"><span class="nav-number">1.4.3.</span> <span class="nav-text">③ @Inject、@Named注解（Spring3.0后添加的,需添加JSR-330的jar包，使用方法同@Autowired、@Qualifier注解）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、注入Spring表达式值"><span class="nav-number">1.5.</span> <span class="nav-text">5、注入Spring表达式值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、-RequestMapping可以用在类定义和方法定义上，它标明这个类或方法与哪一个客户请求对应。"><span class="nav-number">1.6.</span> <span class="nav-text">6、@RequestMapping可以用在类定义和方法定义上，它标明这个类或方法与哪一个客户请求对应。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、-Controller：声明Controller组件，这样可以使得Controller更加灵活，可以不用实现Controller接口，请求处理的方法也可以灵活定义。"><span class="nav-number">1.7.</span> <span class="nav-text">7、@Controller：声明Controller组件，这样可以使得Controller更加灵活，可以不用实现Controller接口，请求处理的方法也可以灵活定义。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8、-SpringBootApplication：声明该类为SpringBoot的引导类"><span class="nav-number">1.8.</span> <span class="nav-text">8、@SpringBootApplication：声明该类为SpringBoot的引导类</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring注解"><span class="nav-number">1.</span> <span class="nav-text">Spring注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、自动扫描的注解标记"><span class="nav-number">1.1.</span> <span class="nav-text">1、自动扫描的注解标记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、指定组件的作用域"><span class="nav-number">1.2.</span> <span class="nav-text">2、指定组件的作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、初始化和销毁回调的控制"><span class="nav-number">1.3.</span> <span class="nav-text">3、初始化和销毁回调的控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、指定依赖注入关系"><span class="nav-number">1.4.</span> <span class="nav-text">4、指定依赖注入关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#①-Resource注解"><span class="nav-number">1.4.1.</span> <span class="nav-text">① @Resource注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#②-Autowired、-Qualifier注解"><span class="nav-number">1.4.2.</span> <span class="nav-text">② @Autowired、@Qualifier注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#③-Inject、-Named注解（Spring3-0后添加的-需添加JSR-330的jar包，使用方法同-Autowired、-Qualifier注解）"><span class="nav-number">1.4.3.</span> <span class="nav-text">③ @Inject、@Named注解（Spring3.0后添加的,需添加JSR-330的jar包，使用方法同@Autowired、@Qualifier注解）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、注入Spring表达式值"><span class="nav-number">1.5.</span> <span class="nav-text">5、注入Spring表达式值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、-RequestMapping可以用在类定义和方法定义上，它标明这个类或方法与哪一个客户请求对应。"><span class="nav-number">1.6.</span> <span class="nav-text">6、@RequestMapping可以用在类定义和方法定义上，它标明这个类或方法与哪一个客户请求对应。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、-Controller：声明Controller组件，这样可以使得Controller更加灵活，可以不用实现Controller接口，请求处理的方法也可以灵活定义。"><span class="nav-number">1.7.</span> <span class="nav-text">7、@Controller：声明Controller组件，这样可以使得Controller更加灵活，可以不用实现Controller接口，请求处理的方法也可以灵活定义。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8、-SpringBootApplication：声明该类为SpringBoot的引导类"><span class="nav-number">1.8.</span> <span class="nav-text">8、@SpringBootApplication：声明该类为SpringBoot的引导类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9、-ConfigurationProerties映射"><span class="nav-number">1.9.</span> <span class="nav-text">9、@ConfigurationProerties映射</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -671,7 +673,7 @@ public class HelloController{
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
 
 
 
@@ -679,7 +681,7 @@ public class HelloController{
 
 
 
-  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.2</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.2</div>
 
 
 
