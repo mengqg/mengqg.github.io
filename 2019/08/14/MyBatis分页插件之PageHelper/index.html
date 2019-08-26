@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Sylas">
 <meta property="og:description" content="PageHelperPageHelper使用步骤1、导入Maven依赖12345&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;com.github.pagehelper&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;pagehelper&amp;lt;/artifactId&amp;gt;    &amp;lt;version&amp;gt;5.1.2&amp;lt;/versio">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-14T13:55:53.163Z">
+<meta property="og:updated_time" content="2019-08-23T06:44:22.280Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MyBatis分页插件之PageHelper">
 <meta name="twitter:description" content="PageHelperPageHelper使用步骤1、导入Maven依赖12345&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;com.github.pagehelper&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;pagehelper&amp;lt;/artifactId&amp;gt;    &amp;lt;version&amp;gt;5.1.2&amp;lt;/versio">
@@ -195,7 +195,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Navigationsleiste an/ausschalten">
+    <button aria-label="Cambiar a barra de navegación">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -222,7 +222,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Inicio</a>
 
   </li>
         
@@ -238,7 +238,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archivo</a>
 
   </li>
 
@@ -326,19 +326,31 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Publicado el</span>
               
 
               
                 
               
 
-              <time title="Erstellt: 2019-08-14 20:24:14 / Geändert am: 21:55:53" itemprop="dateCreated datePublished" datetime="2019-08-14T20:24:14+08:00">2019-08-14</time>
+              <time title="Creado por: 2019-08-14 20:24:14" itemprop="dateCreated datePublished" datetime="2019-08-14T20:24:14+08:00">2019-08-14</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Editado el</span>
+                
+                <time title="Modificado por: 2019-08-23 14:44:22" itemprop="dateModified" datetime="2019-08-23T14:44:22+08:00">2019-08-23</time>
               
             
           </span>
@@ -407,6 +419,14 @@ ArgumentsObjTest 。
 9. closeConn ：默认值为 true 。当使用运行时动态数据源或没有设置 helperDialect 属性自动获取数据库类
 型时，会自动获取一个数据库连接， 通过该属性来设置是否关闭获取的这个连接，默认true 关闭，设置为
 false 后，不会关闭获取的连接，这个参数的设置要根据自己选择的数据源来决定。</code></pre><h3 id="4、实现：在ServiceImpl方法中即执行sql前使用pageHelper"><a href="#4、实现：在ServiceImpl方法中即执行sql前使用pageHelper" class="headerlink" title="4、实现：在ServiceImpl方法中即执行sql前使用pageHelper"></a>4、实现：在ServiceImpl方法中即执行sql前使用pageHelper</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Orders&gt; <span class="title">findAllByPage</span><span class="params">(Integer page, Integer pageSize)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">//参数pageNum是页码值  参数pageSize代表是每页显示条数</span></span><br><span class="line">    PageHelper.startPage(<span class="number">1</span>, <span class="number">5</span>);</span><br><span class="line">    <span class="keyword">return</span> ordersDao.findAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、OrdersController"><a href="#5、OrdersController" class="headerlink" title="5、OrdersController"></a>5、OrdersController</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//分页查询全部订单</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/findAll.do"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> ModelAndView <span class="title">findAll</span><span class="params">(@RequestParam(name = <span class="string">"page"</span>, required = <span class="keyword">true</span>, defaultValue = <span class="string">"1"</span>)</span> Integer page,</span></span><br><span class="line"><span class="function">                            @<span class="title">RequestParam</span><span class="params">(name = <span class="string">"size"</span>, required = <span class="keyword">true</span>, defaultValue = <span class="string">"4"</span>)</span> Integer size) <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    ModelAndView mv = <span class="keyword">new</span> ModelAndView();</span><br><span class="line">    List&lt;Orders&gt; ordersList = ordersService.findAllByPage(page, size);</span><br><span class="line">    <span class="comment">//PageInfo就是一个分页Bean</span></span><br><span class="line">    PageInfo pageInfo = <span class="keyword">new</span> PageInfo(ordersList);</span><br><span class="line">    mv.addObject(<span class="string">"pageInfo"</span>, pageInfo);</span><br><span class="line">    mv.setViewName(<span class="string">"orders-page-list"</span>);</span><br><span class="line">    <span class="keyword">return</span> mv;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6、jsp中"><a href="#6、jsp中" class="headerlink" title="6、jsp中"></a>6、jsp中</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;tbody&gt;</span><br><span class="line">	&lt;c:forEach items=<span class="string">"$&#123;pageInfo.list&#125;"</span> <span class="keyword">var</span>=<span class="string">"orders"</span>&gt;</span><br><span class="line">		&lt;tr&gt;</span><br><span class="line">			&lt;td&gt;<span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"ids"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></span><br><span class="line">			&lt;td&gt;$&#123;orders.id &#125;&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">			&lt;td&gt;$&#123;orders.orderNum &#125;&lt;/</span>td&gt;</span><br><span class="line">			&lt;td&gt;$&#123;orders.product.productName &#125;&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">			&lt;td&gt;$&#123;orders.product.productPrice &#125;&lt;/</span>td&gt;</span><br><span class="line">			&lt;td&gt;$&#123;orders.orderTimeStr &#125;&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">			&lt;td class="text-center"&gt;$&#123;orders.orderStatusStr &#125;&lt;/</span>td&gt;</span><br><span class="line">			&lt;td <span class="class"><span class="keyword">class</span></span>=<span class="string">"text-center"</span>&gt;</span><br><span class="line">				&lt;button type=<span class="string">"button"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"btn bg-olive btn-xs"</span>&gt;订单&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">				&lt;button type="button" class="btn bg-olive btn-xs" onclick="location.href='$&#123;pageContext.request.contextPath&#125;/</span>orders/findById.do?id=$&#123;orders.id&#125;<span class="string">'"&gt;详情&lt;/button&gt;</span></span><br><span class="line"><span class="string">				&lt;button type="button" class="btn bg-olive btn-xs"&gt;编辑&lt;/button&gt;</span></span><br><span class="line"><span class="string">			&lt;/td&gt;</span></span><br><span class="line"><span class="string">		&lt;/tr&gt;</span></span><br><span class="line"><span class="string">	&lt;/c:forEach&gt;</span></span><br><span class="line"><span class="string">&lt;/tbody&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"box-footer"</span>&gt;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"pull-left"</span>&gt;</span><br><span class="line">        &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"form-group form-inline"</span>&gt;</span><br><span class="line">            总共<span class="number">2</span> 页，共<span class="number">14</span> 条数据。 每页</span><br><span class="line">            &lt;select <span class="class"><span class="keyword">class</span></span>=<span class="string">"form-control"</span> id = <span class="string">"changePageSize"</span> onchange=<span class="string">"changePageSize()"</span>&gt;</span><br><span class="line">                &lt;option&gt;1&lt;/option&gt;</span><br><span class="line">                &lt;option&gt;2&lt;/option&gt;</span><br><span class="line">                &lt;option&gt;3&lt;/option&gt;</span><br><span class="line">                &lt;option&gt;4&lt;/option&gt;</span><br><span class="line">                &lt;option&gt;5&lt;/option&gt;</span><br><span class="line">            &lt;/select&gt; 条</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"box-tools pull-right"</span>&gt;</span><br><span class="line">        &lt;ul <span class="class"><span class="keyword">class</span></span>=<span class="string">"pagination"</span>&gt;</span><br><span class="line">            &lt;li&gt;</span><br><span class="line">                &lt;a href="$&#123;pageContext.request.contextPath&#125;/orders/findAll.do?page=1&amp;size=$&#123;pageInfo.pageSize&#125;" aria-label="Previous"&gt;首页&lt;/a&gt;</span><br><span class="line">            &lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href="$&#123;pageContext.request.contextPath&#125;/orders/findAll.do?page=$&#123;pageInfo.pageNum-1&#125;&amp;size=$&#123;pageInfo.pageSize&#125;"&gt;上一页&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;c:forEach begin=<span class="string">"1"</span> end=<span class="string">"$&#123;pageInfo.pages&#125;"</span> <span class="keyword">var</span> = <span class="string">"pageNum"</span>&gt;</span><br><span class="line">				&lt;li&gt;&lt;a href="$&#123;pageContext.request.contextPath&#125;/orders/findAll.do?page=$&#123;pageNum&#125;&amp;size=$&#123;pageInfo.pageSize&#125;"&gt;$&#123;pageNum&#125;&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">			&lt;/c:forEach&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href="$&#123;pageContext.request.contextPath&#125;/orders/findAll.do?page=$&#123;pageInfo.pageNum+1&#125;&amp;size=$&#123;pageInfo.pageSize&#125;"&gt;下一页&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;</span><br><span class="line">                &lt;a href="$&#123;pageContext.request.contextPath&#125;/orders/findAll.do?page=$&#123;pageInfo.pages&#125;&amp;size=$&#123;pageInfo.pageSize&#125;" aria-label="Next"&gt;尾页&lt;/a&gt;</span><br><span class="line">            &lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">changePageSize</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="comment">//获取下拉框的值</span></span><br><span class="line">	<span class="keyword">var</span> pageSize = $(<span class="string">"#changePageSize"</span>).val();</span><br><span class="line"></span><br><span class="line">	<span class="comment">//向服务器发送请求，改变没页显示条数</span></span><br><span class="line">	location.href = <span class="string">"$&#123;pageContext.request.contextPath&#125;/orders/findAll.do?page=1&amp;size="</span></span><br><span class="line">			+ pageSize;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -455,6 +475,10 @@ false 后，不会关闭获取的连接，这个参数的设置要根据自己�
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/08/26/使用IDEA的maven工程导入ojdbc14-jar包失败/" rel="prev" title="使用IDEA的maven工程导入ojdbc14.jar包失败">
+                使用IDEA的maven工程导入ojdbc14.jar包失败 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -499,10 +523,10 @@ false 后，不会关闭获取的连接，这个参数的设置要根据自己�
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Tabla de contenidos
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Inicio
           </li>
         </ul>
       
@@ -522,8 +546,8 @@ false 后，不会关闭获取的连接，这个参数的设置要根据自己�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">entradas</span>
                   </a>
                 </div>
               
@@ -551,8 +575,10 @@ false 后，不会关闭获取的连接，这个参数的设置要根据自己�
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
-                    <span class="site-state-item-name">schlagwörter</span>
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">tags</span>
                   
                 </div>
               
@@ -589,7 +615,7 @@ false 后，不会关闭获取的连接，这个参数的设置要根据自己�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PageHelper"><span class="nav-number">1.</span> <span class="nav-text">PageHelper</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PageHelper使用步骤"><span class="nav-number">1.1.</span> <span class="nav-text">PageHelper使用步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、导入Maven依赖"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、导入Maven依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、在spring的配置文件applicationContext-xml的SqlSessionFactoryBean中配置如下"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、在spring的配置文件applicationContext.xml的SqlSessionFactoryBean中配置如下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、参数介绍"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、参数介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、实现：在ServiceImpl方法中即执行sql前使用pageHelper"><span class="nav-number">1.1.4.</span> <span class="nav-text">4、实现：在ServiceImpl方法中即执行sql前使用pageHelper</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PageHelper"><span class="nav-number">1.</span> <span class="nav-text">PageHelper</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PageHelper使用步骤"><span class="nav-number">1.1.</span> <span class="nav-text">PageHelper使用步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、导入Maven依赖"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、导入Maven依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、在spring的配置文件applicationContext-xml的SqlSessionFactoryBean中配置如下"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、在spring的配置文件applicationContext.xml的SqlSessionFactoryBean中配置如下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、参数介绍"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、参数介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、实现：在ServiceImpl方法中即执行sql前使用pageHelper"><span class="nav-number">1.1.4.</span> <span class="nav-text">4、实现：在ServiceImpl方法中即执行sql前使用pageHelper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、OrdersController"><span class="nav-number">1.1.5.</span> <span class="nav-text">5、OrdersController</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、jsp中"><span class="nav-number">1.1.6.</span> <span class="nav-text">6、jsp中</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -622,7 +648,7 @@ false 后，不会关闭获取的连接，这个参数的设置要根据自己�
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+  <div class="powered-by">Creado mediante <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
 
 
 
@@ -630,7 +656,7 @@ false 后，不会关闭获取的连接，这个参数的设置要根据自己�
 
 
 
-  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.2</div>
+  <div class="theme-info">Tema – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.2</div>
 
 
 
