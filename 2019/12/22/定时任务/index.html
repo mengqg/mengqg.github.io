@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="转载自：https://blog.csdn.net/u012726702/article/details/78133586侵删！定点定时任务：管理类：123456789101112131415161718192021222324252627282930313233343536373839404142434445import org.apache.commons.logging.Log;import">
+<meta property="og:type" content="article">
+<meta property="og:title" content="定时任务">
+<meta property="og:url" content="http://yoursite.com/2019/12/22/定时任务/index.html">
+<meta property="og:site_name" content="Sylas">
+<meta property="og:description" content="转载自：https://blog.csdn.net/u012726702/article/details/78133586侵删！定点定时任务：管理类：123456789101112131415161718192021222324252627282930313233343536373839404142434445import org.apache.commons.logging.Log;import">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-22T04:36:05.664Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="定时任务">
+<meta name="twitter:description" content="转载自：https://blog.csdn.net/u012726702/article/details/78133586侵删！定点定时任务：管理类：123456789101112131415161718192021222324252627282930313233343536373839404142434445import org.apache.commons.logging.Log;import">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/12/22/定时任务/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>定时任务 | Sylas</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sylas</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">人生是一场难得的修行，不要轻易交白卷！</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Navigationsleiste an/ausschalten">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/22/定时任务/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sylas">
+      <meta itemprop="description" content="记录所学、所知、所悟">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sylas">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">定时任务
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-12-22 12:28:07 / Geändert am: 12:36:05" itemprop="dateCreated datePublished" datetime="2019-12-22T12:28:07+08:00">2019-12-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="转载自：https-blog-csdn-net-u012726702-article-details-78133586"><a href="#转载自：https-blog-csdn-net-u012726702-article-details-78133586" class="headerlink" title="转载自：https://blog.csdn.net/u012726702/article/details/78133586"></a>转载自：<a href="https://blog.csdn.net/u012726702/article/details/78133586" target="_blank" rel="noopener">https://blog.csdn.net/u012726702/article/details/78133586</a></h3><h3 id="侵删！"><a href="#侵删！" class="headerlink" title="侵删！"></a>侵删！</h3><h2 id="定点定时任务："><a href="#定点定时任务：" class="headerlink" title="定点定时任务："></a>定点定时任务：</h2><h3 id="管理类："><a href="#管理类：" class="headerlink" title="管理类："></a>管理类：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.logging.Log;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.logging.LogFactory;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.util.Calendar;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.Timer;</span><br><span class="line"><span class="keyword">import</span> java.util.TimerTask;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by Administrator on 2017/9/29.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TaskManager</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 开启任务</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">//默认时间间隔一天</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">long</span> PERIOD_TIME = <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>;</span><br><span class="line">    Log log = LogFactory.getLog(TaskManager.class);</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startTask</span><span class="params">(TimerTask task, <span class="keyword">int</span> dayInterval, <span class="keyword">int</span> hour, <span class="keyword">int</span> minute)</span></span>&#123;</span><br><span class="line">        PERIOD_TIME =  dayInterval * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>;</span><br><span class="line">        Calendar calendar = Calendar.getInstance();</span><br><span class="line">        calendar.set(Calendar.HOUR_OF_DAY, hour);</span><br><span class="line">        calendar.set(Calendar.MINUTE, minute);</span><br><span class="line">        calendar.set(Calendar.SECOND, <span class="number">0</span>);</span><br><span class="line">        <span class="comment">//执行定时任务的时间</span></span><br><span class="line">        Date date=calendar.getTime();</span><br><span class="line">        <span class="comment">//为了避免若容器启动的时间晚于定时时间，在重启容器的时候会立刻执行该任务</span></span><br><span class="line">        <span class="keyword">if</span> (date.before(<span class="keyword">new</span> Date())) &#123;</span><br><span class="line">            date = <span class="keyword">this</span>.addDay(date, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        Timer timer = <span class="keyword">new</span> Timer();</span><br><span class="line">        <span class="comment">//任务在指定的时间开始进行重复的固定延迟执行</span></span><br><span class="line">        timer.schedule(task,date);</span><br><span class="line"> </span><br><span class="line">      </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 增加或减少天数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Date <span class="title">addDay</span><span class="params">(Date date, <span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        Calendar startDT = Calendar.getInstance();</span><br><span class="line">        startDT.setTime(date);</span><br><span class="line">        startDT.add(Calendar.DAY_OF_MONTH, num);</span><br><span class="line">        <span class="keyword">return</span> startDT.getTime();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="监听"><a href="#监听" class="headerlink" title="监听"></a>监听</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.servlet.ServletContextEvent; </span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletContextListener;  </span><br><span class="line"><span class="comment">/**  * Created by Administrator on 2017/9/29.  */</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RankTaskListener</span> <span class="keyword">implements</span> <span class="title">ServletContextListener</span> </span>&#123; <span class="meta">@Override</span>  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextInitialized</span><span class="params">(ServletContextEvent servletContextEvent)</span> </span>&#123; System.out.println(<span class="string">"开启监听了.2点28准时启动..........."</span>);  String day=<span class="string">"1"</span>;  String hour=<span class="string">"14"</span>;  String minute=<span class="string">"28"</span>;  <span class="keyword">new</span> TaskManager().startTask(<span class="keyword">new</span> RankTask(),  Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute));  &#125; <span class="meta">@Override</span>  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextDestroyed</span><span class="params">(ServletContextEvent servletContextEvent)</span> </span>&#123; &#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.TimerTask;  <span class="comment">/**  * Created by Administrator on 2017/9/29.  */</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RankTask</span> <span class="keyword">extends</span> <span class="title">TimerTask</span> </span>&#123; <span class="meta">@Override</span>  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; System.out.println(<span class="string">"...............任务执行了............."</span>);  &#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="web-xml监听配置"><a href="#web-xml监听配置" class="headerlink" title="web.xml监听配置"></a>web.xml监听配置</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span>  <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>com.mytest.task.RankTaskListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span> <span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="定时任务-1"><a href="#定时任务-1" class="headerlink" title="定时任务"></a>定时任务</h2><p>### </p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/16/设计模式/" rel="next" title="设计模式">
+                <i class="fa fa-chevron-left"></i> 设计模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sylas</p>
+              <div class="site-description motion-element" itemprop="description">记录所学、所知、所悟</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">schlagwörter</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#转载自：https-blog-csdn-net-u012726702-article-details-78133586"><span class="nav-number">1.</span> <span class="nav-text">转载自：https://blog.csdn.net/u012726702/article/details/78133586</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#侵删！"><span class="nav-number">2.</span> <span class="nav-text">侵删！</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#定点定时任务："><span class="nav-number"></span> <span class="nav-text">定点定时任务：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#管理类："><span class="nav-number">1.</span> <span class="nav-text">管理类：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监听"><span class="nav-number">2.</span> <span class="nav-text">监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定时任务"><span class="nav-number">3.</span> <span class="nav-text">定时任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web-xml监听配置"><span class="nav-number">4.</span> <span class="nav-text">web.xml监听配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定时任务-1"><span class="nav-number"></span> <span class="nav-text">定时任务</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sylas</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

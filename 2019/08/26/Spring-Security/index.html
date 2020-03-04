@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Spring Security一、Spring Security介绍Spring Security 的前身是 Acegi Security ，是 Spring 项目组中用来提供安全认证服务的框架。(https://projects.spring.io/spring-security/) Spring Security 为基于J2EE企业应用软件提供了全面安全服务。特别是使用领先的J2EE解决方案-">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Security">
+<meta property="og:url" content="http://yoursite.com/2019/08/26/Spring-Security/index.html">
+<meta property="og:site_name" content="Sylas">
+<meta property="og:description" content="Spring Security一、Spring Security介绍Spring Security 的前身是 Acegi Security ，是 Spring 项目组中用来提供安全认证服务的框架。(https://projects.spring.io/spring-security/) Spring Security 为基于J2EE企业应用软件提供了全面安全服务。特别是使用领先的J2EE解决方案-">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-12T03:50:27.692Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Security">
+<meta name="twitter:description" content="Spring Security一、Spring Security介绍Spring Security 的前身是 Acegi Security ，是 Spring 项目组中用来提供安全认证服务的框架。(https://projects.spring.io/spring-security/) Spring Security 为基于J2EE企业应用软件提供了全面安全服务。特别是使用领先的J2EE解决方案-">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/08/26/Spring-Security/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Spring Security | Sylas</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sylas</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">人生是一场难得的修行，不要轻易交白卷！</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Navigationsleiste an/ausschalten">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/26/Spring-Security/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sylas">
+      <meta itemprop="description" content="记录所学、所知、所悟">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sylas">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring Security
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-08-26 20:31:40" itemprop="dateCreated datePublished" datetime="2019-08-26T20:31:40+08:00">2019-08-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Bearbeitet am</span>
+                
+                <time title="Geändert am: 2019-09-12 11:50:27" itemprop="dateModified" datetime="2019-09-12T11:50:27+08:00">2019-09-12</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h1><h2 id="一、Spring-Security介绍"><a href="#一、Spring-Security介绍" class="headerlink" title="一、Spring Security介绍"></a>一、Spring Security介绍</h2><p>Spring Security 的前身是 Acegi Security ，是 Spring 项目组中用来提供安全认证服务的框架。<br>(<a href="https://projects.spring.io/spring-security/" target="_blank" rel="noopener">https://projects.spring.io/spring-security/</a>) Spring Security 为基于J2EE企业应用软件提供了全面安全服务。特别<br>是使用领先的J2EE解决方案-Spring框架开发的企业软件项目。人们使用Spring Security有很多种原因，不过通常吸<br>引他们的是在J2EE Servlet规范或EJB规范中找不到典型企业应用场景的解决方案。 特别要指出的是他们不能再<br>WAR 或 EAR 级别进行移植。这样，如果你更换服务器环境，就要，在新的目标环境进行大量的工作，对你的应用<br>系统进行重新配 置安全。使用Spring Security 解决了这些问题，也为你提供很多有用的，完全可以指定的其他安<br>全特性。 安全包括两个主要操作。<br>“认证”，是为用户建立一个他所声明的主体。主题一般式指用户，设备或可以在你系 统中执行动作的其他系<br>统。例如用户登录。<br>“授权”指的是一个用户能否在你的应用中执行某个操作，在到达授权判断之前，身份的主题已经由 身份验证<br>过程建立了。例如菜单权限、新增等。<br>这些概念是通用的，不是Spring Security特有的。在身份验证层面，Spring Security广泛支持各种身份验证模式，<br>这些验证模型绝大多数都由第三方提供，或则正在开发的有关标准机构提供的，例如 Internet Engineering Task<br>Force.作为补充，Spring Security 也提供了自己的一套验证功能。<br>Spring Security 目前支持认证一体化如下认证技术： HTTP BASIC authentication headers (一个基于IEFT RFC 的<br>标准) HTTP Digest authentication headers (一个基于IEFT RFC 的标准) HTTP X.509 client certificate exchange<br>(一个基于IEFT RFC 的标准) LDAP (一个非常常见的跨平台认证需要做法，特别是在大环境) Form-based<br>authentication (提供简单用户接口的需求) OpenID authentication Computer Associates Siteminder JA-SIG<br>Central Authentication Service (CAS，这是一个流行的开源单点登录系统) Transparent authentication context<br>propagation for Remote Method Invocation and HttpInvoker (一个Spring远程调用协议)</p>
+<h2 id="二、Spring-Security快速入门步骤"><a href="#二、Spring-Security快速入门步骤" class="headerlink" title="二、Spring Security快速入门步骤"></a>二、Spring Security快速入门步骤</h2><h3 id="1、导入依赖"><a href="#1、导入依赖" class="headerlink" title="1、导入依赖"></a>1、导入依赖</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.security<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-security-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.security.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.security<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-security-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.security.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2、web-xml文件中创建filter-filter名不得修改，固定为”springSecurityFilterChain”"><a href="#2、web-xml文件中创建filter-filter名不得修改，固定为”springSecurityFilterChain”" class="headerlink" title="2、web.xml文件中创建filter(filter名不得修改，固定为”springSecurityFilterChain”)"></a>2、web.xml文件中创建filter(filter名不得修改，固定为”springSecurityFilterChain”)</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">xmlns</span>=<span class="string">"http://java.sun.com/xml/ns/javaee"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">version</span>=<span class="string">"2.5"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">display-name</span>&gt;</span>SpringSecurity314<span class="tag">&lt;/<span class="name">display-name</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:spring-security.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>springSecurityFilterChain<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.DelegatingFilterProxy<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>springSecurityFilterChain<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.htm<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.htm<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3、Spring-Security核心配置文件配置-spring-security-xml"><a href="#3、Spring-Security核心配置文件配置-spring-security-xml" class="headerlink" title="3、Spring Security核心配置文件配置:spring-security.xml"></a>3、Spring Security核心配置文件配置:spring-security.xml</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:security</span>=<span class="string">"http://www.springframework.org/schema/security"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">http://www.springframework.org/schema/security</span></span></span><br><span class="line"><span class="tag"><span class="string">http://www.springframework.org/schema/security/spring-security.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">security:http</span> <span class="attr">auto-config</span>=<span class="string">"true"</span> <span class="attr">use-expressions</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- intercept-url定义一个过滤规则 pattern表示对哪些url进行权限控制，access属性表示在请求对应的URL时需要什么权限，</span></span><br><span class="line"><span class="comment">         默认配置时它应该是一个以逗号分割的角色列表，请求的用户只需拥有其中的一个角色就能成功访问对应的URL--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">security:intercept-url</span> <span class="attr">pattern</span>=<span class="string">"/**"</span> <span class="attr">access</span>=<span class="string">"ROLE_USER"</span> /&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- auto-config配置后，不需要在配置下面信息&lt;security:form-login /&gt;定义登录表单信息</span></span><br><span class="line"><span class="comment">         &lt;security:http-basic/&gt; &lt;security:logout /&gt; --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">security:http</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">security:authentication-manager</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">security:authentication-provider</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">security:user-service</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">security:user</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">password</span>=<span class="string">"&#123;noop&#125;user"</span> <span class="attr">authorities</span>=<span class="string">"ROLE_USER"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">security:user</span> <span class="attr">name</span>=<span class="string">"admin"</span> <span class="attr">password</span>=<span class="string">"&#123;noop&#125;admin"</span> <span class="attr">authorities</span>=<span class="string">"ROLE_ADMIN"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">security:user-service</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">security:authentication-provider</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">security:authentication-manager</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4、在Terminal中执行命令"><a href="#4、在Terminal中执行命令" class="headerlink" title="4、在Terminal中执行命令"></a>4、在Terminal中执行命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\IDEA\IDEAProject\springSecurityTest&gt;mvn tomcat7:run</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、使用自定义页面案例"><a href="#三、使用自定义页面案例" class="headerlink" title="三、使用自定义页面案例"></a>三、使用自定义页面案例</h2><h3 id="1、创建自定义页面login-html、success-html、failer-html"><a href="#1、创建自定义页面login-html、success-html、failer-html" class="headerlink" title="1、创建自定义页面login.html、success.html、failer.html"></a>1、创建自定义页面login.html、success.html、failer.html</h3><h3 id="2、配置spring-security-xml配置文件"><a href="#2、配置spring-security-xml配置文件" class="headerlink" title="2、配置spring-security.xml配置文件"></a>2、配置spring-security.xml配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">       xmlns:security=&quot;http://www.springframework.org/schema/security&quot;</span><br><span class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">http://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">http://www.springframework.org/schema/security</span><br><span class="line">http://www.springframework.org/schema/security/spring-security.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 配置不过滤的资源（静态资源及登录相关） --&gt;</span><br><span class="line">    &lt;security:http security=&quot;none&quot; pattern=&quot;/login.html&quot;/&gt;</span><br><span class="line">    &lt;security:http security=&quot;none&quot; pattern=&quot;/failer.html&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;security:http auto-config=&quot;true&quot; use-expressions=&quot;false&quot;&gt;</span><br><span class="line">        &lt;!-- intercept-url定义一个过滤规则 pattern表示对哪些url进行权限控制，ccess属性表示在请求对应</span><br><span class="line">        的URL时需要什么权限，</span><br><span class="line">        默认配置时它应该是一个以逗号分隔的角色列表，请求的用户只需拥有其中的一个角色就能成功访问对应</span><br><span class="line">        的URL --&gt;</span><br><span class="line">        &lt;!-- 配置资料连接，表示任意路径都需要ROLE_USER权限 --&gt;</span><br><span class="line">        &lt;security:intercept-url pattern=&quot;/**&quot; access=&quot;ROLE_USER&quot; /&gt;</span><br><span class="line">        &lt;!-- auto-config配置后，不需要在配置下面信息 &lt;security:form-login /&gt; 定义登录表单信息</span><br><span class="line">        &lt;security:http-basic</span><br><span class="line">        /&gt; &lt;security:logout /&gt; --&gt;</span><br><span class="line">        &lt;!-- 自定义登录页面，login-page 自定义登陆页面 authentication-failure-url 用户权限校验失败之后</span><br><span class="line">         才会跳转到这个页面，如果数据库中没有这个用户则不会跳转到这个界面。</span><br><span class="line">            default-target-url登陆成功后跳转的页面。注：登陆页面用户名固定 username，</span><br><span class="line">            密码 password，action:login</span><br><span class="line">            authentication-failure-url：只是校验用户名密码是否错误，不校验权限，即没有权限不走此页面，</span><br><span class="line">            如果没有配置就走default-target-url,所以用admin登陆时也去了success.html页面的原因</span><br><span class="line">            --&gt;</span><br><span class="line">        &lt;security:form-login login-page=&quot;/login.html&quot;</span><br><span class="line">            login-processing-url=&quot;/login&quot; username-parameter=&quot;username&quot;</span><br><span class="line">            password-parameter=&quot;password&quot; authentication-failure-url=&quot;/failer.html&quot;</span><br><span class="line">            default-target-url=&quot;/success.html&quot; authentication-success-forward-url=&quot;/success.html&quot;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;!-- 关闭CSRF,默认是开启的 --&gt;</span><br><span class="line">        &lt;security:csrf disabled=&quot;true&quot;/&gt;</span><br><span class="line">    &lt;/security:http&gt;</span><br><span class="line">    &lt;security:authentication-manager&gt;</span><br><span class="line">        &lt;security:authentication-provider&gt;</span><br><span class="line">            &lt;security:user-service&gt;</span><br><span class="line">                &lt;security:user name=&quot;user&quot; password=&quot;&#123;noop&#125;user&quot;</span><br><span class="line">                               authorities=&quot;ROLE_USER&quot; /&gt;</span><br><span class="line">                &lt;security:user name=&quot;admin&quot; password=&quot;&#123;noop&#125;admin&quot;</span><br><span class="line">                               authorities=&quot;ROLE_ADMIN&quot; /&gt;</span><br><span class="line">            &lt;/security:user-service&gt;</span><br><span class="line">        &lt;/security:authentication-provider&gt;</span><br><span class="line">    &lt;/security:authentication-manager&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、Spring-Security使用数据库完成登录认证"><a href="#四、Spring-Security使用数据库完成登录认证" class="headerlink" title="四、Spring Security使用数据库完成登录认证"></a>四、Spring Security使用数据库完成登录认证</h2><h3 id="1、操作方式"><a href="#1、操作方式" class="headerlink" title="1、操作方式"></a>1、操作方式</h3><pre><code>在Spring Security中如果想要使用数据进行认证操作，有很多种操作方式，这里我们介绍使用UserDetails、UserDetailsService来完成操作。</code></pre><h4 id="1-UserDetails"><a href="#1-UserDetails" class="headerlink" title="1)UserDetails"></a>1)UserDetails</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDetails</span> <span class="keyword">extends</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">	Collection&lt;? extends GrantedAuthority&gt; getAuthorities();</span><br><span class="line">	<span class="function">String <span class="title">getPassword</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">String <span class="title">getUsername</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">isAccountNonExpired</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">isAccountNonLocked</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">isCredentialsNonExpired</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">isEnabled</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<pre><code>UserDetails是一个接口，我们可以认为UserDetails作用是于封装当前进行认证的用户信息，但由于其是一个接口，所以我们可以对其进行实现，也可以使用Spring Security提供的一个UserDetails的实现类User来完成操作。</code></pre><p>以下是User类的部分代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">UserDetails</span>, <span class="title">CredentialsContainer</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String password;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> String username;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Set&lt;GrantedAuthority&gt; authorities;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">boolean</span> accountNonExpired; <span class="comment">//帐户是否过期</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">boolean</span> accountNonLocked; <span class="comment">//帐户是否锁定</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">boolean</span> credentialsNonExpired; <span class="comment">//认证是否过期</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">boolean</span> enabled; <span class="comment">//帐户是否可用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-UserDetailsService"><a href="#2-UserDetailsService" class="headerlink" title="2)UserDetailsService"></a>2)UserDetailsService</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDetailsService</span> </span>&#123;</span><br><span class="line">	<span class="function">UserDetails <span class="title">loadUserByUsername</span><span class="params">(String username)</span> <span class="keyword">throws</span> UsernameNotFoundException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<pre><code>上面将UserDetails与UserDetailsService做了一个简单的介绍，那么我们具体如何完成Spring Security的数据库认证操作哪，我们通过用户管理中用户登录来完成Spring Security的认证操作。</code></pre>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/26/使用IDEA的maven工程导入ojdbc14-jar包失败/" rel="next" title="使用IDEA的maven工程导入ojdbc14.jar包失败">
+                <i class="fa fa-chevron-left"></i> 使用IDEA的maven工程导入ojdbc14.jar包失败
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/19/Redis/" rel="prev" title="Redis">
+                Redis <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sylas</p>
+              <div class="site-description motion-element" itemprop="description">记录所学、所知、所悟</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">schlagwörter</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Security"><span class="nav-number">1.</span> <span class="nav-text">Spring Security</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Spring-Security介绍"><span class="nav-number">1.1.</span> <span class="nav-text">一、Spring Security介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Spring-Security快速入门步骤"><span class="nav-number">1.2.</span> <span class="nav-text">二、Spring Security快速入门步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、导入依赖"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、导入依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、web-xml文件中创建filter-filter名不得修改，固定为”springSecurityFilterChain”"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、web.xml文件中创建filter(filter名不得修改，固定为”springSecurityFilterChain”)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、Spring-Security核心配置文件配置-spring-security-xml"><span class="nav-number">1.2.3.</span> <span class="nav-text">3、Spring Security核心配置文件配置:spring-security.xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、在Terminal中执行命令"><span class="nav-number">1.2.4.</span> <span class="nav-text">4、在Terminal中执行命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、使用自定义页面案例"><span class="nav-number">1.3.</span> <span class="nav-text">三、使用自定义页面案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建自定义页面login-html、success-html、failer-html"><span class="nav-number">1.3.1.</span> <span class="nav-text">1、创建自定义页面login.html、success.html、failer.html</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、配置spring-security-xml配置文件"><span class="nav-number">1.3.2.</span> <span class="nav-text">2、配置spring-security.xml配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Spring-Security使用数据库完成登录认证"><span class="nav-number">1.4.</span> <span class="nav-text">四、Spring Security使用数据库完成登录认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、操作方式"><span class="nav-number">1.4.1.</span> <span class="nav-text">1、操作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-UserDetails"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">1)UserDetails</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-UserDetailsService"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">2)UserDetailsService</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sylas</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
